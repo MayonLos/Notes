@@ -1,0 +1,24 @@
+.obsidian/workspace*.json
+.obsidian/cache/
+.obsidian/snapshots/
+.obsidian/plugins/*/data.json
+.smart-env/
+
+# Optional: ignore all Obsidian config files
+# Uncomment if you do not want to sync settings/plugins
+# .obsidian/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp and logs
+*.tmp
+*.temp
+*.swp
+*.log
+
+# Common editor folders
+.vscode/
+.idea/
