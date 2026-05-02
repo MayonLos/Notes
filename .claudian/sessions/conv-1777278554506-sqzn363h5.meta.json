@@ -1,0 +1,22 @@
+{
+  "id": "conv-1777278554506-sqzn363h5",
+  "providerId": "claude",
+  "title": "/wiki-ingest",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1777278554506,
+  "updatedAt": 1777386577896,
+  "lastResponseAt": 1777280875438,
+  "sessionId": "441221f3-0017-4602-aaff-04cff41d78f7",
+  "providerState": {
+    "providerSessionId": "441221f3-0017-4602-aaff-04cff41d78f7"
+  },
+  "usage": {
+    "model": "sonnet",
+    "inputTokens": 153,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 73088,
+    "contextWindow": 200000,
+    "contextTokens": 73241,
+    "percentage": 37
+  }
+}

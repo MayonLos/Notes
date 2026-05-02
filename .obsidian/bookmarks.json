@@ -1,0 +1,41 @@
+{
+  "items": [
+    {
+      "type": "group",
+      "ctime": 1776751656481,
+      "items": [
+        {
+          "type": "group",
+          "ctime": 1776751656481,
+          "items": [],
+          "title": "编程"
+        },
+        {
+          "type": "group",
+          "ctime": 1776751656481,
+          "items": [],
+          "title": "数电"
+        },
+        {
+          "type": "group",
+          "ctime": 1776751656481,
+          "items": [],
+          "title": "自动控制原理"
+        },
+        {
+          "type": "group",
+          "ctime": 1776751656481,
+          "items": [],
+          "title": "Ros"
+        },
+        {
+          "type": "group",
+          "ctime": 1776751656481,
+          "items": [],
+          "title": "stm32"
+        }
+      ],
+      "title": "sortspec"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "conv-1777386746110-nz2dp5pon",
+  "providerId": "claude",
+  "title": "Ingest new raw material into wiki",
+  "titleGenerationStatus": "success",
+  "createdAt": 1777386746111,
+  "updatedAt": 1777618943021,
+  "lastResponseAt": 1777387384791,
+  "sessionId": "f5ab664d-d075-4651-8543-7d0a9ac04ef2",
+  "providerState": {
+    "providerSessionId": "f5ab664d-d075-4651-8543-7d0a9ac04ef2"
+  },
+  "currentNote": "CLAUDE.md",
+  "usage": {
+    "model": "sonnet",
+    "inputTokens": 361,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 56448,
+    "contextWindow": 200000,
+    "contextTokens": 56809,
+    "percentage": 28
+  }
+}

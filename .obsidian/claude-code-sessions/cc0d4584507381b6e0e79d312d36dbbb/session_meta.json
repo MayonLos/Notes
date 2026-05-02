@@ -1,0 +1,36 @@
+{
+  "sessionName": "Untitled",
+  "isStandalone": false,
+  "linkedNotes": [
+    {
+      "path": "数电/Untitled.md",
+      "title": "Untitled",
+      "linkedAt": "2026-04-20T10:25:47.946Z",
+      "isPrimary": true
+    },
+    {
+      "path": "自动控制原理/拉普拉斯变换.md",
+      "title": "拉普拉斯变换",
+      "linkedAt": "2026-04-21T03:53:45.174Z",
+      "isPrimary": false
+    },
+    {
+      "path": "自动控制原理/系统框图.md",
+      "title": "系统框图",
+      "linkedAt": "2026-04-21T03:53:45.174Z",
+      "isPrimary": false
+    },
+    {
+      "path": "自动控制原理/物理模型.md",
+      "title": "物理模型",
+      "linkedAt": "2026-04-21T03:53:45.179Z",
+      "isPrimary": false
+    }
+  ],
+  "backend": "claude",
+  "lastUsed": "2026-04-21T03:52:26.409Z",
+  "createdAt": "2026-04-20T10:25:47.946Z",
+  "messageCount": 3,
+  "notePath": "数电/Untitled.md",
+  "noteTitle": "Untitled"
+}
