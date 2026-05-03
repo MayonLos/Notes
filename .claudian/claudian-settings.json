@@ -3,7 +3,7 @@
   "permissionMode": "yolo",
   "model": "sonnet",
   "thinkingBudget": "low",
-  "effortLevel": "max",
+  "effortLevel": "high",
   "serviceTier": "default",
   "enableAutoTitleGeneration": true,
   "titleGenerationModel": "",
@@ -40,11 +40,13 @@
       "safeMode": "workspace-write",
       "cliPath": "",
       "cliPathsByHost": {},
+      "customModels": "",
       "reasoningSummary": "detailed",
       "environmentVariables": "",
       "environmentHash": "",
       "installationMethodsByHost": {
-        "mayon": "native-windows"
+        "mayon": "native-windows",
+        "nixos-btw": "native-windows"
       },
       "wslDistroOverridesByHost": {}
     }
@@ -54,11 +56,14 @@
     "claude": "sonnet"
   },
   "savedProviderEffort": {
-    "claude": "max"
+    "claude": "high"
   },
   "savedProviderServiceTier": {},
   "savedProviderThinkingBudget": {
     "claude": "low"
+  },
+  "savedProviderPermissionMode": {
+    "claude": "yolo"
   },
   "lastCustomModel": "",
   "maxTabs": 3,

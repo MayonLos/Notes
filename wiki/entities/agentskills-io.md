@@ -22,7 +22,7 @@ last_updated: 2026-04-27
 | 属性 | 值 |
 |:---|:---|
 | 类型 | 开放标准 |
-| 发布方 | [[Anthropic]] |
+| 发布方 | Anthropic |
 | 发布日期 | 2025-12-18 |
 | 规范地址 | https://agentskills.io/specification |
 | 许可证 | 开放标准（Apache 2.0 兼容生态） |

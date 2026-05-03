@@ -1,0 +1,23 @@
+{
+  "id": "conv-1777810207923-y7z4bfz2",
+  "providerId": "claude",
+  "title": "I need to understand your task or request befor...",
+  "titleGenerationStatus": "success",
+  "createdAt": 1777810207923,
+  "updatedAt": 1777810443479,
+  "lastResponseAt": 1777810443479,
+  "sessionId": "a9b84b9f-e4ec-4278-a4fc-7a9caa09420b",
+  "providerState": {
+    "providerSessionId": "a9b84b9f-e4ec-4278-a4fc-7a9caa09420b"
+  },
+  "usage": {
+    "model": "sonnet",
+    "inputTokens": 1,
+    "cacheCreationInputTokens": 7370,
+    "cacheReadInputTokens": 36525,
+    "contextWindow": 200000,
+    "contextTokens": 43896,
+    "percentage": 22,
+    "contextWindowIsAuthoritative": true
+  }
+}
