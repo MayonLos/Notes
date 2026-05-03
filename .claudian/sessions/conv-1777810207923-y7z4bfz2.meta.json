@@ -4,8 +4,8 @@
   "title": "I need to understand your task or request befor...",
   "titleGenerationStatus": "success",
   "createdAt": 1777810207923,
-  "updatedAt": 1777810443479,
-  "lastResponseAt": 1777810443479,
+  "updatedAt": 1777811099871,
+  "lastResponseAt": 1777811099871,
   "sessionId": "a9b84b9f-e4ec-4278-a4fc-7a9caa09420b",
   "providerState": {
     "providerSessionId": "a9b84b9f-e4ec-4278-a4fc-7a9caa09420b"
@@ -13,11 +13,11 @@
   "usage": {
     "model": "sonnet",
     "inputTokens": 1,
-    "cacheCreationInputTokens": 7370,
-    "cacheReadInputTokens": 36525,
+    "cacheCreationInputTokens": 722,
+    "cacheReadInputTokens": 102254,
     "contextWindow": 200000,
-    "contextTokens": 43896,
-    "percentage": 22,
+    "contextTokens": 102977,
+    "percentage": 51,
     "contextWindowIsAuthoritative": true
   }
 }

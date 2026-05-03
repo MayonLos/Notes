@@ -11,6 +11,26 @@ date: 2026-04-27
 
 ---
 
+## 🗺️ 推荐学习路线
+
+> [!tip] 按领域顺序学习，领域间通过跨域链接贯通
+>
+> **C++ 编程**（顺序学习）
+> [[concepts/cpp/基础语法|①基础语法]] → [[concepts/cpp/面向对象|②OOP]] → [[concepts/cpp/标准模板库|③STL]] → [[concepts/cpp/内存管理|④内存管理]]
+>
+> **数学 + 控制理论**（顺序学习）
+> [[concepts/math/算子|①算子]] → [[concepts/math/Laplace变换|②Laplace变换]] → [[concepts/control/物理建模|③物理建模]] → [[concepts/control/方框图|④方框图]]
+>
+> **数字电路**（顺序学习）
+> [[concepts/digital/原码反码补码|①原码反码补码]] → [[concepts/digital/组合逻辑电路|②组合逻辑电路]] → ③时序逻辑（待填充）
+>
+> **跨域桥梁**
+> - C++ `int`/`char` 底层表示 ↔ [[concepts/digital/原码反码补码|补码]]
+> - C++ 位运算符 (`&` `|` `^` `~`) ↔ [[concepts/digital/组合逻辑电路|逻辑门]]
+> - 控制系统传递函数 ↔ [[concepts/math/算子|算子视角]] — 详见 [[syntheses/算子本质|算子本质（综合论述）]]
+
+---
+
 ## 概念
 
 ### C++ 编程

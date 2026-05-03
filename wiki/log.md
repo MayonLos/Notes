@@ -87,3 +87,25 @@ date: 2026-04-27
 - **后续操作**：
   - 新建 [[syntheses/算子本质]] — 综合论述页，固化回答
   - 更新 [[index|Wiki 索引]] — 注册综合条目
+
+## [2026-05-03] lint | 知识库全量健康巡检
+- **结果**：22 个页面均已注册，无幽灵条目，无文件缺失，图片资源完整
+- **修复（红灯）**：
+  - [[entities/agentskills-io]] — 修复 `[[Anthropic]]` 死链（改为纯文本，无实体页）
+- **修复（黄灯）**：
+  - [[synthesis|综合论述]] — 新增「专项综合论述」区块，补充 [[syntheses/算子本质]] 引用
+  - [[CLAUDE.md]] — 更新 `concepts/` 子目录规范（`cpp/`、`math/`、`control/` 取代旧 `programming/`、`theory/`）
+- **冲突**：无
+
+## [2026-05-03] sync | concepts 全面整理（学习路径 + 跨域链接）
+- **变更**：
+  - 所有 10 个 concepts 内容页新增 `> [!tip] 学习路径` callout（前置知识 / 本页定位 / 后续方向）
+  - [[concepts/math/算子]] — 修复 `sources` 字段（错误引用了 wiki 文件，已清空）；新增 [[syntheses/算子本质]] 关联
+  - [[concepts/math/Laplace变换]] — 新增 [[syntheses/算子本质]] 关联
+  - [[concepts/control/物理建模]] — 新增 [[concepts/math/算子]] + [[syntheses/算子本质]] 关联
+  - **跨域链接（数字电路 ↔ C++）**：
+    - [[concepts/cpp/基础语法]] → 新增 [[concepts/digital/原码反码补码]]（整型底层表示）
+    - [[concepts/digital/原码反码补码]] → 新增 [[concepts/cpp/基础语法]]（整数溢出原理）
+    - [[concepts/digital/组合逻辑电路]] → 新增 [[concepts/cpp/基础语法]]（位运算符 ↔ 逻辑门）
+  - [[index|Wiki 索引]] — 新增「🗺️ 推荐学习路线」区块（三条学习路径 + 跨域桥梁导航）
+- **冲突**：无
