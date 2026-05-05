@@ -3,7 +3,7 @@
   "permissionMode": "yolo",
   "model": "sonnet",
   "thinkingBudget": "low",
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "serviceTier": "default",
   "enableAutoTitleGeneration": true,
   "titleGenerationModel": "",
@@ -56,7 +56,7 @@
     "claude": "sonnet"
   },
   "savedProviderEffort": {
-    "claude": "high"
+    "claude": "medium"
   },
   "savedProviderServiceTier": {},
   "savedProviderThinkingBudget": {
@@ -69,6 +69,7 @@
   "maxTabs": 3,
   "tabBarPosition": "input",
   "enableAutoScroll": true,
-  "openInMainTab": false,
+  "deferMathRenderingDuringStreaming": true,
+  "chatViewPlacement": "right-sidebar",
   "hiddenProviderCommands": {}
 }
