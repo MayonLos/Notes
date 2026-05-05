@@ -22,7 +22,7 @@ date: 2026-04-27
 > [[concepts/math/算子|①算子]] → [[concepts/math/Laplace变换|②Laplace变换]] → [[concepts/control/物理建模|③物理建模]] → [[concepts/control/方框图|④方框图]]
 >
 > **数字电路**（顺序学习）
-> [[concepts/digital/原码反码补码|①原码反码补码]] → [[concepts/digital/组合逻辑电路|②组合逻辑电路]] → ③时序逻辑（待填充）
+> [[concepts/digital/原码反码补码|①原码反码补码]] → [[concepts/digital/组合逻辑电路|②组合逻辑电路]] → [[concepts/digital/锁存器和触发器|③锁存器和触发器]]
 >
 > **跨域桥梁**
 > - C++ `int`/`char` 底层表示 ↔ [[concepts/digital/原码反码补码|补码]]
@@ -54,6 +54,7 @@ date: 2026-04-27
 <!-- wiki/concepts/digital/ -->
 - [[concepts/digital/组合逻辑电路|组合逻辑电路]] — 逻辑门、加法器、MUX/DEMUX、编码器、译码器、比较器、竞争与冒险
 - [[concepts/digital/原码反码补码|原码反码补码]] — 有符号整数的三种二进制编码，补码统一加减法的数学原理
+- [[concepts/digital/锁存器和触发器|锁存器和触发器]] — SR锁存器特征方程推导、双稳态记忆原理、各类触发器（D/JK/T）概览
 
 ### AI 工具与编程范式
 <!-- wiki/concepts/programming/ -->
