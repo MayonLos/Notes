@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 280" width="500" height="280">
+  <style>
+    text { font-family: 'Times New Roman', serif; font-size: 18px; }
+    .label { font-size: 16px; font-style: italic; }
+    .wire { stroke: #333; stroke-width: 2; fill: none; }
+    .gate { fill: #e8f4f8; stroke: #2b6cb0; stroke-width: 2; }
+  </style>
+
+  <!-- Gate 1: NAND (top) -->
+  <rect x="120" y="40" width="80" height="60" rx="8" class="gate" />
+  <text x="160" y="75" text-anchor="middle" font-size="14">&amp;</text>
+  <circle cx="200" cy="70" r="4" fill="#2b6cb0"/>
+
+  <!-- Gate 2: NAND (bottom) -->
+  <rect x="120" y="140" width="80" height="60" rx="8" class="gate" />
+  <text x="160" y="175" text-anchor="middle" font-size="14">&amp;</text>
+  <circle cx="200" cy="170" r="4" fill="#2b6cb0"/>
+
+  <!-- Inputs to Gate 1 -->
+  <text x="30" y="55" class="label" text-anchor="middle">S̄<tspan baseline-shift="sub" font-size="12">d</tspan></text>
+  <path d="M55,50 L120,50" class="wire" />
+
+  <text x="30" y="90" class="label" text-anchor="middle">Q̄</text>
+  <path d="M55,90 L120,90" class="wire" />
+
+  <!-- Inputs to Gate 2 -->
+  <text x="30" y="155" class="label" text-anchor="middle">Q</text>
+  <path d="M55,150 L120,150" class="wire" />
+
+  <text x="30" y="190" class="label" text-anchor="middle">R̄<tspan baseline-shift="sub" font-size="12">d</tspan></text>
+  <path d="M55,185 L120,185" class="wire" />
+
+  <!-- Output from Gate 1 → Q -->
+  <path d="M204,70 L260,70" class="wire" />
+  <text x="280" y="75" class="label">Q</text>
+  <circle cx="270" cy="70" r="3" fill="#333"/>
+
+  <!-- Feedback: Q → Gate 2 input -->
+  <path d="M270,70 L310,70 L310,150 L205,150" class="wire" />
+
+  <!-- Output from Gate 2 → Q̄ -->
+  <path d="M204,170 L260,170" class="wire" />
+  <text x="280" y="175" class="label">Q̄</text>
+  <circle cx="270" cy="170" r="3" fill="#333"/>
+
+  <!-- Feedback: Q̄ → Gate 1 input -->
+  <path d="M310,170 L350,170 L350,90 L205,90" class="wire" />
+
+  <!-- Title -->
+  <text x="250" y="230" text-anchor="middle" font-size="18" font-weight="bold">NAND 门 SR 锁存器（基本 RSFF）</text>
+  <text x="250" y="255" text-anchor="middle" font-size="14" fill="#666">Q = (S̄·Q̄)′ 　 Q̄ = (Q·R̄)′ 　 约束: S·R = 0</text>
+</svg>
