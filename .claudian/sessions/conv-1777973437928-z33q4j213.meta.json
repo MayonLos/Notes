@@ -1,0 +1,15 @@
+{
+  "id": "conv-1777973437928-z33q4j213",
+  "providerId": "claude",
+  "title": "Fork: Analyze SR flip-flop logic algebra sim… (#5)",
+  "createdAt": 1777973437928,
+  "updatedAt": 1777973437942,
+  "sessionId": null,
+  "providerState": {
+    "forkSource": {
+      "sessionId": "f6f179b2-ddb3-49ed-9d56-25a012a63aa5",
+      "resumeAt": "6061d715-0f6c-4877-a2ef-75dd6bef0857"
+    }
+  },
+  "currentNote": "wiki/concepts/digital/锁存器和触发器.md"
+}

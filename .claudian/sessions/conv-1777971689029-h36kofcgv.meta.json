@@ -4,8 +4,8 @@
   "title": "Analyze SR flip-flop logic algebra simplification",
   "titleGenerationStatus": "success",
   "createdAt": 1777971689029,
-  "updatedAt": 1777972996906,
-  "lastResponseAt": 1777972996906,
+  "updatedAt": 1777973437943,
+  "lastResponseAt": 1777973430068,
   "sessionId": "f6f179b2-ddb3-49ed-9d56-25a012a63aa5",
   "providerState": {
     "providerSessionId": "f6f179b2-ddb3-49ed-9d56-25a012a63aa5"
@@ -13,12 +13,11 @@
   "currentNote": "wiki/concepts/digital/锁存器和触发器.md",
   "usage": {
     "model": "sonnet",
-    "inputTokens": 1,
-    "cacheCreationInputTokens": 556,
-    "cacheReadInputTokens": 69744,
+    "inputTokens": 3,
+    "cacheCreationInputTokens": 3802,
+    "cacheReadInputTokens": 117697,
     "contextWindow": 200000,
-    "contextTokens": 70301,
-    "percentage": 35,
-    "contextWindowIsAuthoritative": true
+    "contextTokens": 121502,
+    "percentage": 61
   }
 }
