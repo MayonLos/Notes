@@ -52,9 +52,13 @@ date: 2026-04-27
 
 ### 数字电路
 <!-- wiki/concepts/digital/ -->
-- [[concepts/digital/组合逻辑电路|组合逻辑电路]] — 逻辑门、加法器、MUX/DEMUX、编码器、译码器、比较器、竞争与冒险
+- [[concepts/digital/计数制与编码|计数制与编码]] — 二进制/十进制/十六进制转换、BCD码、ASCII码
+- [[concepts/digital/逻辑代数|逻辑代数]] — 与或非/异或/同或基本运算、布尔代数定律、真值表→逻辑式
+- [[concepts/digital/逻辑函数化简|逻辑函数化简]] — 公式化简法、卡诺图（2/3/4变量）、含无关项化简
+- [[concepts/digital/逻辑门电路|逻辑门电路]] — DTL/TTL/CMOS三代工艺、OC门/OD门/三态门/TG传输门
+- [[concepts/digital/组合逻辑电路|组合逻辑电路]] — 逻辑门、加法器/超前进位、MUX/DEMUX、编/译码器、MSI设计法、竞争与冒险
 - [[concepts/digital/原码反码补码|原码反码补码]] — 有符号整数的三种二进制编码，补码统一加减法的数学原理
-- [[concepts/digital/锁存器和触发器|锁存器和触发器]] — SR锁存器特征方程推导、双稳态记忆原理、各类触发器（D/JK/T）概览
+- [[concepts/digital/锁存器和触发器|锁存器和触发器]] — SR锁存器特征方程推导、同步/主从/JK/T触发器、时序波形分析
 
 ### AI 工具与编程范式
 <!-- wiki/concepts/programming/ -->
@@ -87,13 +91,14 @@ date: 2026-04-27
 - [[sources/摘要-agent-skills-spec|摘要-agent-skills-spec]] — Agent Skills 开放标准规范的核心内容提炼：渐进式加载、SKILL.md 格式、与 MCP 的关系
 - [[sources/摘要-deepseek-api|摘要-deepseek-api]] — DeepSeek API 双兼容配置指南、模型能力矩阵、Anthropic 兼容层能力缺口清单
 - [[sources/摘要-thorough-pytorch|摘要-thorough-pytorch]] — DataWhale《深入浅出PyTorch》教程，从基础到实战覆盖 PyTorch 全流程，配套视频与练习
+- [[sources/摘要-数字电路课堂笔记|摘要-数字电路课堂笔记]] — 52页手写课堂笔记，完整覆盖数字电路四章（基础→门电路→组合逻辑→触发器）
 
 ---
 
 ## 对比
 <!-- wiki/comparisons/ -->
 
-*暂无条目。*
+- [[comparisons/TTL-vs-CMOS|TTL vs CMOS]] — 逻辑器件选型核心对比：功耗/速度/噪声容限/接口兼容性
 
 ---
 
