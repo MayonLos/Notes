@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400" width="520" height="400">
+  <style>
+    text { font-family: 'Times New Roman', serif; }
+    .grid { stroke: #333; stroke-width: 1.5; fill: none; }
+    .cell1 { fill: #bee3f8; stroke: #333; stroke-width: 1; }
+    .cell0 { fill: #fff; stroke: #333; stroke-width: 1; }
+    .cellx { fill: #fefcbf; stroke: #333; stroke-width: 1; stroke-dasharray: 3,3; }
+    .label { font-size: 14px; text-anchor: middle; }
+    .small { font-size: 11px; }
+  </style>
+
+  <!-- Title -->
+  <text x="260" y="30" text-anchor="middle" font-size="17" font-weight="bold">4 变量卡诺图（含无关项）</text>
+  <text x="260" y="50" text-anchor="middle" font-size="13" fill="#666">F = Σm(2,4,6,8,10) + Σd(0,7,12,14)</text>
+
+  <!-- Column headers -->
+  <text x="195" y="80" class="label">CD</text>
+  <text x="265" y="73" class="label">00</text>
+  <text x="335" y="73" class="label">01</text>
+  <text x="405" y="73" class="label">11</text>
+  <text x="475" y="73" class="label">10</text>
+
+  <!-- Row headers -->
+  <text x="155" y="145" class="label">AB</text>
+  <text x="178" y="145" class="label">00</text>
+  <text x="178" y="215" class="label">01</text>
+  <text x="178" y="285" class="label">11</text>
+  <text x="178" y="355" class="label">10</text>
+
+  <!-- Grid -->
+  <rect x="230" y="65" width="280" height="280" class="grid" />
+
+  <!-- Row 1 (AB=00): m0 x, m1 0, m3 0, m2 1 -->
+  <rect x="230" y="90" width="70" height="70" class="cellx" />
+  <text x="265" y="130" class="small">m₀ ×</text>
+  <rect x="300" y="90" width="70" height="70" class="cell0" />
+  <text x="335" y="130" class="small">m₁ 0</text>
+  <rect x="370" y="90" width="70" height="70" class="cell0" />
+  <text x="405" y="130" class="small">m₃ 0</text>
+  <rect x="440" y="90" width="70" height="70" class="cell1" />
+  <text x="475" y="130" class="small">m₂ 1</text>
+
+  <!-- Row 2 (AB=01): m4 1, m5 0, m7 ×, m6 1 -->
+  <rect x="230" y="160" width="70" height="70" class="cell1" />
+  <text x="265" y="200" class="small">m₄ 1</text>
+  <rect x="300" y="160" width="70" height="70" class="cell0" />
+  <text x="335" y="200" class="small">m₅ 0</text>
+  <rect x="370" y="160" width="70" height="70" class="cellx" />
+  <text x="405" y="200" class="small">m₇ ×</text>
+  <rect x="440" y="160" width="70" height="70" class="cell1" />
+  <text x="475" y="200" class="small">m₆ 1</text>
+
+  <!-- Row 3 (AB=11): m12 ×, m13 0, m15 0, m14 × -->
+  <rect x="230" y="230" width="70" height="70" class="cellx" />
+  <text x="265" y="270" class="small">m₁₂ ×</text>
+  <rect x="300" y="230" width="70" height="70" class="cell0" />
+  <text x="335" y="270" class="small">m₁₃ 0</text>
+  <rect x="370" y="230" width="70" height="70" class="cell0" />
+  <text x="405" y="270" class="small">m₁₅ 0</text>
+  <rect x="440" y="230" width="70" height="70" class="cellx" />
+  <text x="475" y="270" class="small">m₁₄ ×</text>
+
+  <!-- Row 4 (AB=10): m8 1, m9 0, m11 0, m10 1 -->
+  <rect x="230" y="300" width="70" height="70" class="cell1" />
+  <text x="265" y="340" class="small">m₈ 1</text>
+  <rect x="300" y="300" width="70" height="70" class="cell0" />
+  <text x="335" y="340" class="small">m₉ 0</text>
+  <rect x="370" y="300" width="70" height="70" class="cell0" />
+  <text x="405" y="340" class="small">m₁₁ 0</text>
+  <rect x="440" y="300" width="70" height="70" class="cell1" />
+  <text x="475" y="340" class="small">m₁₀ 1</text>
+
+  <!-- Group 1: entire right column (CD=10) -->
+  <rect x="440" y="90" width="70" height="280" fill="none" stroke="#e53e3e" stroke-width="2.5" rx="5" />
+  <text x="540" y="230" font-size="13" fill="#e53e3e">圈1: D̄</text>
+
+  <!-- Result -->
+  <text x="260" y="390" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6cb0">F = D̄（利用 × 将整列 CD=10 合并为单变量）</text>
+</svg>
