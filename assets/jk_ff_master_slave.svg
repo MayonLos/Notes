@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420" width="700" height="420">
+  <style>
+    text { font-family: 'Times New Roman', serif; font-size: 16px; }
+    .label { font-size: 14px; }
+    .wire { stroke: #333; stroke-width: 2; fill: none; }
+    .thick { stroke: #2b6cb0; stroke-width: 2.5; }
+    .box { fill: #f0f4ff; stroke: #2b6cb0; stroke-width: 2; }
+    .clock { stroke: #c53030; stroke-width: 2; }
+  </style>
+
+  <!-- Master latch box -->
+  <rect x="100" y="40" width="200" height="130" rx="10" class="box" />
+  <text x="200" y="65" text-anchor="middle" font-weight="bold" font-size="16">主锁存器</text>
+  <text x="200" y="85" text-anchor="middle" font-size="13" fill="#666">(Master, CP=1 通)</text>
+
+  <!-- Slave latch box -->
+  <rect x="400" y="40" width="200" height="130" rx="10" class="box" />
+  <text x="500" y="65" text-anchor="middle" font-weight="bold" font-size="16">从锁存器</text>
+  <text x="500" y="85" text-anchor="middle" font-size="13" fill="#666">(Slave, CP̄=1 通)</text>
+
+  <!-- JK inputs -->
+  <text x="30" y="110" class="label" text-anchor="middle">J</text>
+  <path d="M55,105 L100,105" class="wire" />
+  <text x="30" y="140" class="label" text-anchor="middle">K</text>
+  <path d="M55,135 L100,135" class="wire" />
+  <text x="30" y="170" class="label" text-anchor="middle">CP</text>
+  <path d="M55,165 L100,165" class="wire" />
+
+  <!-- Internal master → slave -->
+  <path d="M300,80 L400,80" class="thick" />
+  <text x="350" y="75" text-anchor="middle" font-size="12" fill="#2b6cb0">Q_m</text>
+  <path d="M300,130 L400,130" class="thick" />
+  <text x="350" y="145" text-anchor="middle" font-size="12" fill="#2b6cb0">Q̄_m</text>
+
+  <!-- Slave outputs -->
+  <path d="M600,80 L650,80" class="wire" />
+  <text x="660" y="85" font-weight="bold">Q</text>
+  <path d="M600,130 L650,130" class="wire" />
+  <text x="660" y="135" font-weight="bold">Q̄</text>
+
+  <!-- CP to slave (inverted) -->
+  <path d="M55,165 L100,165" class="wire" />
+  <!-- CP negation bubble for slave -->
+  <path d="M130,165 L380,165" class="wire" />
+  <circle cx="390" cy="165" r="4" fill="white" stroke="#c53030" stroke-width="2"/>
+
+  <!-- Labels at bottom -->
+  <text x="200" y="200" text-anchor="middle" font-size="14">上升沿采样</text>
+  <text x="500" y="200" text-anchor="middle" font-size="14">下降沿输出</text>
+
+  <!-- Timing diagram -->
+  <text x="350" y="250" text-anchor="middle" font-size="17" font-weight="bold">主从 JK 触发器时序波形</text>
+
+  <!-- CP wave -->
+  <line x1="60" y1="285" x2="640" y2="285" stroke="#ddd" stroke-width="1"/>
+  <text x="40" y="290" font-size="13">CP</text>
+  <path d="M80,285 L80,270 L120,270 L120,285 L160,285 L160,270 L200,270 L200,285 L240,285 L240,270 L280,270 L280,285 L320,285 L320,270 L360,270 L360,285 L400,285 L400,270 L440,270 L440,285 L480,285 L480,270 L520,270 L520,285 L560,285 L560,270 L600,270 L600,285" class="wire" />
+
+  <!-- J wave -->
+  <line x1="60" y1="315" x2="640" y2="315" stroke="#ddd" stroke-width="1"/>
+  <text x="40" y="320" font-size="13">J</text>
+  <path d="M80,315 L200,315 L200,300 L280,300 L280,315 L600,315" class="wire" />
+
+  <!-- K wave -->
+  <line x1="60" y1="345" x2="640" y2="345" stroke="#ddd" stroke-width="1"/>
+  <text x="40" y="350" font-size="13">K</text>
+  <path d="M80,345 L360,345 L360,330 L440,330 L440,345 L600,345" class="wire" />
+
+  <!-- Q wave -->
+  <line x1="60" y1="375" x2="640" y2="375" stroke="#ddd" stroke-width="1"/>
+  <text x="40" y="380" font-size="13">Q</text>
+  <path d="M80,375 L240,375 L240,360 L360,360 L360,375 L520,375 L520,360 L600,360" class="wire" />
+
+  <!-- Annotation arrows -->
+  <text x="140" y="270" font-size="11" fill="#c53030">① J=1,K=0</text>
+  <text x="300" y="270" font-size="11" fill="#c53030">② 保持</text>
+  <text x="460" y="270" font-size="11" fill="#c53030">③ K=1</text>
+  <text x="200" y="398" font-size="12" fill="#2b6cb0">置位→1      保持      复位→0      置位→1</text>
+</svg>
