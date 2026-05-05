@@ -3,14 +3,10 @@
   "providerId": "claude",
   "title": "Fork: Analyze SR flip-flop logic algebra sim… (#5)",
   "createdAt": 1777973437928,
-  "updatedAt": 1777973810105,
-  "lastResponseAt": 1777973810105,
-  "sessionId": null,
+  "updatedAt": 1777974839556,
+  "lastResponseAt": 1777974839556,
+  "sessionId": "99c9b319-17b4-47d0-ae9f-54d2f50b94ae",
   "providerState": {
-    "forkSource": {
-      "sessionId": "f6f179b2-ddb3-49ed-9d56-25a012a63aa5",
-      "resumeAt": "6061d715-0f6c-4877-a2ef-75dd6bef0857"
-    },
     "subagentData": {
       "toolu_017Mzej26MftpA72P3o4BZfN": {
         "id": "toolu_017Mzej26MftpA72P3o4BZfN",
@@ -19,7 +15,40 @@
         "mode": "async",
         "isExpanded": false,
         "status": "running",
-        "toolCalls": [],
+        "toolCalls": [
+          {
+            "id": "toolu_01XgUCse2NVv7d1kbeAR3Rjs",
+            "name": "Bash",
+            "input": {
+              "command": "ls /home/mayon/Vaults/wiki/concepts/digital/"
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "原码反码补码.md\n组合逻辑电路.md\n锁存器和触发器.md"
+          },
+          {
+            "id": "toolu_01MNss7SPX8iHtTmrzJEB44n",
+            "name": "Write",
+            "input": {
+              "file_path": "/home/mayon/Vaults/wiki/concepts/digital/计数制与编码.md",
+              "content": "---\ntitle: \"计数制与编码\"\ntype: concept\ntags:\n  - concept\n  - 数字电路\n  - 数制转换\n  - 编码\naliases:\n  - Number Systems and Encoding\n  - 数制\n  - 进制\nsources:\n  - raw/04-notes/数字电路课堂笔记-2026-03-02\nlast_updated: 2026-05-05\n---\n\n> **一句话定义**：计数制是用有限数码按进位规则表示数值的方法；编码是用二进制位串为信息符号建立唯一映射的规则。\n\n---\n\n## 一、常用计数制对比\n\n| 计数制 | 英文名 | 基数 | 数码集合 | 进位规则 | 表示示例 |\n|:---:|:---:|:---:|:---|:---:|:---:|\n| 二进制 | Binary | 2 | 0, 1 | 逢2进1 | $(1101.101)_2$ |\n| 十进制 | Decimal | 10 | 0~9 | 逢10进1 | $(25.625)_{10}$ |\n| 十六进制 | Hexadecimal | 16 | 0~9, A~F | 逢16进1 | $(1D.CE)_{16}$ |\n\n> [!important]\n> 十六进制数码 A~F 分别对应十进制 10~15。书写时常在数后加后缀：二进制用 `B`，十进制用 `D`，十六进制用 `H`。\n\n---\n\n## 二、按权展开法（任意进制 → 十进制）\n\n任意 $R$ 进制数，其值等于各位**数码 × 对应权值**之和：\n\n$$N = \\sum_{i} d_i \\times R^i$$\n\n其中 $d_i$ 为第 $i$ 位的数码，$R^i$ 为该位的权值（整数位从 $0$ 向左递增，小数位从 $-1$ 向右递减）。\n\n### 示例 1：二进制 → 十进制\n\n$$\n1101.101_B = 1\\times2^3 + 1\\times2^2 + 0\\times2^1 + 1\\times2^0 + 1\\times2^{-1} + 0\\times2^{-2} + 1\\times2^{-3}\n$$\n\n$$= 8 + 4 + 0 + 1 + 0.5 + 0 + 0.125 = 13.625_D$$\n\n### 示例 2：十六进制 → 十进制\n\n$$\n1D_H = 1\\times16^1 + 13\\times16^0 = 16 + 13 = 29_D\n$$\n\n---\n\n## 三、十进制 → 二进制转换\n\n整数部分与小数部分分开处理，再合并。\n\n### 3.1 整数部分：除 2 取余法\n\n反复除以 2，记录余数，**从下往上**读余数即为二进制整数。\n\n以 $25_D$ 为例：\n\n| 步骤 | 被除数 | ÷ 2 | 商 | 余数（权位） |\n|:---:|:---:|:---:|:---:|:---:|\n| 1 | 25 | → | 12 | **1**（$2^0$，最低位） |\n| 2 | 12 | → | 6 | **0**（$2^1$） |\n| 3 | 6 | → | 3 | **0**（$2^2$） |\n| 4 | 3 | → | 1 | **1**（$2^3$） |\n| 5 | 1 | → | 0 | **1**（$2^4$，最高位） |\n\n从下往上读余数：$25_D = 11001_B$\n\n### 3.2 小数部分：乘 2 取整法\n\n反复乘以 2，取整数部分，**从上往下**读即为二进制小数。\n\n以 $0.625_D$ 为例：\n\n| 步骤 | 小数部分 | ×2 | 结果 | 取整（权位） |\n|:---:|:---:|:---:|:---:|:---:|\n| 1 | 0.625 | → | 1.25 | **1**（$2^{-1}$，最高位） |\n| 2 | 0.25 | → | 0.5 | **0**（$2^{-2}$） |\n| 3 | 0.5 | → | 1.0 | **1**（$2^{-3}$，最低位） |\n\n从上往下读整数：$0.625_D = .101_B$\n\n### 3.3 合并结果\n\n$$25.625_D = 11001.101_B$$\n\n> [!important]\n> 小数部分乘 2 取整，若小数部分始终不为 0 则产生无限循环二进制小数（十进制小数不一定能精确转换）。\n\n---\n\n## 四、二进制 ↔ 十六进制直接转换\n\n> [!important]\n> 4 位二进制恰好对应 1 位十六进制（$2^4 = 16$），可直接分组转换，无需经过十进制中间步骤。\n\n### 对应关系表\n\n| 十进制 | 二进制（4位） | 十六进制 |\n|:---:|:---:|:---:|\n| 0 | 0000 | 0 |\n| 1 | 0001 | 1 |\n| 2 | 0010 | 2 |\n| 3 | 0011 | 3 |\n| 4 | 0100 | 4 |\n| 5 | 0101 | 5 |\n| 6 | 0110 | 6 |\n| 7 | 0111 | 7 |\n| 8 | 1000 | 8 |\n| 9 | 1001 | 9 |\n| 10 | 1010 | A |\n| 11 | 1011 | B |\n| 12 | 1100 | C |\n| 13 | 1101 | D |\n| 14 | 1110 | E |\n| 15 | 1111 | F |\n\n### 示例：十六进制 → 二进制\n\n每位十六进制展开为 4 位二进制：\n\n$$57F.C2E_H = \\underbrace{0101}_{5}\\ \\underbrace{0111}_{7}\\ \\underbrace{1111}_{F}\\ .\\ \\underbrace{1100}_{C}\\ \\underbrace{0010}_{2}\\ \\underbrace{1110}_{E}\\ _B$$\n\n### 示例：二进制 → 十六进制\n\n从小数点向两侧，每 4 位一组（不足补 0），再逐组转换：\n\n$$\n\\underbrace{0001}_{1}\\ \\underbrace{1101}_{D}\\ \\underbrace{1100}_{C}\\ \\underbrace{1100}_{C}\\ \\underbrace{1101}_{D}\\ .\\ \\underbrace{0101}_{5}\\ \\underbrace{1011}_{B}\\ \\underbrace{1110}_{E}\\ _H = 1DCCD.5BE_H\n$$\n\n---\n\n## 五、编码\n\n### 5.1 编码位数公式\n\n若需编码的对象有 $N$ 个，所需最少编码位数 $n$ 满足：\n\n$$2^n \\geq N \\implies n \\geq \\lceil \\log_2 N \\rceil$$\n\n### 5.2 BCD 码（Binary Coded Decimal）\n\n用 **4 位二进制**表示 **1 位十进制数字**（0~9），每个十进制位独立编码。\n\n| 十进制 | BCD 码（8421码） |\n|:---:|:---:|\n| 0 | 0000 |\n| 1 | 0001 |\n| 2 | 0010 |\n| 3 | 0011 |\n| 4 | 0100 |\n| 5 | 0101 |\n| 6 | 0110 |\n| 7 | 0111 |\n| 8 | 1000 |\n| 9 | 1001 |\n\n> [!info] 新发现\n> BCD 码中 1010~1111（对应十进制 10~15）为**无效码**，不代表任何十进制数字。常用 8421 权重方案，故也称 **8421 BCD 码**。\n\n### 5.3 ASCII 码\n\n美国标准信息交换码（American Standard Code for Information Interchange），用 **7 位二进制**为键盘符号（字母、数字、控制字符）编码，共 $2^7 = 128$ 个编码。\n\n| 字符 | 十六进制 | 十进制 | 二进制 |\n|:---:|:---:|:---:|:---:|\n| `'0'` | 30H | 48 | 011 0000 |\n| `'9'` | 39H | 57 | 011 1001 |\n| `'A'` | 41H | 65 | 100 0001 |\n| `'Z'` | 5AH | 90 | 101 1010 |\n| `'a'` | 61H | 97 | 110 0001 |\n| `'z'` | 7AH | 122 | 111 1010 |\n\n> [!important]\n> 规律：大写字母 `'A'`~`'Z'` 从 41H 连续排列；小写字母 `'a'`~`'z'` 从 61H 连续排列；数字字符 `'0'`~`'9'` 从 30H 连续排列。大小写字母相差 20H（32），可通过异或 `0x20` 互相转换。\n\n---\n\n## 关联连接\n\n- [[concepts/digital/逻辑代数]] — 数字电路的代数基础，与计数制共同构成数字系统理论基础\n- [[concepts/digital/原码反码补码]] — 有符号数的二进制编码方案，建立在二进制计数制之上\n- [[concepts/digital/组合逻辑电路]] — 使用二进制信号实现逻辑功能的电路\n- [[concepts/digital/逻辑函数化简]] — 逻辑函数化简方法，依赖于逻辑代数与二进制表示\n"
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "File created successfully at: /home/mayon/Vaults/wiki/concepts/digital/计数制与编码.md"
+          },
+          {
+            "id": "toolu_01XwTynESPUzvStcQBm4A3td",
+            "name": "Write",
+            "input": {
+              "file_path": "/home/mayon/Vaults/wiki/concepts/digital/逻辑代数.md",
+              "content": "---\ntitle: \"逻辑代数\"\ntype: concept\ntags:\n  - concept\n  - 数字电路\n  - 布尔代数\n  - 逻辑运算\naliases:\n  - Boolean Algebra\n  - 布尔代数\n  - 开关代数\nsources:\n  - raw/04-notes/数字电路课堂笔记-2026-03-04\nlast_updated: 2026-05-05\n---\n\n> **一句话定义**：逻辑代数（布尔代数）是研究逻辑变量（仅取 0/1 两值）之间运算关系的数学工具，是数字电路分析与设计的理论基础。\n\n---\n\n## 一、基本逻辑运算\n\n### 1.1 与运算（AND）\n\n**定义**：所有输入同时为 1，输出才为 1——\"全 1 出 1\"。\n\n$$F = A \\cdot B$$\n\n```mermaid\ngraph LR\n  A --> AND[\"&\"]\n  B --> AND\n  AND --> F[\"F = A·B\"]\n```\n\n| $A$ | $B$ | $F = A \\cdot B$ |\n|:---:|:---:|:---:|\n| 0 | 0 | 0 |\n| 0 | 1 | 0 |\n| 1 | 0 | 0 |\n| 1 | 1 | **1** |\n\n### 1.2 或运算（OR）\n\n**定义**：至少一个输入为 1，输出即为 1——\"有 1 出 1\"。\n\n$$F = A + B$$\n\n```mermaid\ngraph LR\n  A --> OR[\"≥1\"]\n  B --> OR\n  OR --> F[\"F = A+B\"]\n```\n\n| $A$ | $B$ | $F = A + B$ |\n|:---:|:---:|:---:|\n| 0 | 0 | 0 |\n| 0 | 1 | **1** |\n| 1 | 0 | **1** |\n| 1 | 1 | **1** |\n\n### 1.3 非运算（NOT）\n\n**定义**：输出是输入的反相——\"有 1 出 0，有 0 出 1\"。\n\n$$F = \\bar{A}$$\n\n| $A$ | $F = \\bar{A}$ |\n|:---:|:---:|\n| 0 | **1** |\n| 1 | **0** |\n\n### 1.4 异或运算（XOR）\n\n**定义**：两输入**不同**时输出为 1——\"相异出 1\"。\n\n$$F = \\bar{A}B + A\\bar{B} = A \\oplus B$$\n\n| $A$ | $B$ | $F = A \\oplus B$ |\n|:---:|:---:|:---:|\n| 0 | 0 | 0 |\n| 0 | 1 | **1** |\n| 1 | 0 | **1** |\n| 1 | 1 | 0 |\n\n### 1.5 同或运算（XNOR）\n\n**定义**：两输入**相同**时输出为 1——\"相同出 1\"，是异或的反。\n\n$$F = AB + \\bar{A}\\bar{B} = A \\odot B = \\overline{A \\oplus B}$$\n\n| $A$ | $B$ | $F = A \\odot B$ |\n|:---:|:---:|:---:|\n| 0 | 0 | **1** |\n| 0 | 1 | 0 |\n| 1 | 0 | 0 |\n| 1 | 1 | **1** |\n\n> [!important]\n> 异或与同或互为反运算：$A \\oplus B = \\overline{A \\odot B}$，$A \\odot B = \\overline{A \\oplus B}$。\n\n---\n\n## 二、常用逻辑门\n\n| 门名称 | 符号简称 | 逻辑表达式 | 说明 |\n|:---:|:---:|:---|:---|\n| 与非门 | NAND | $F = \\overline{A \\cdot B} = \\bar{A} + \\bar{B}$ | AND 后取反，\"有 0 出 1\" |\n| 或非门 | NOR | $F = \\overline{A + B} = \\bar{A} \\cdot \\bar{B}$ | OR 后取反，\"全 0 出 1\" |\n| 与或非门 | AOI | $F = \\overline{AB + CD}$ | 多组与项相或后取反 |\n\n> [!info] 新发现\n> NAND 门和 NOR 门均为**功能完备集**：仅用 NAND（或仅用 NOR）即可实现任意逻辑函数。实际电路设计中常将逻辑表达式转换为**与非-与非式**再实现。\n\n---\n\n## 三、基本公式与常用公式\n\n### 3.1 基本定律\n\n| 定律 | 公式 |\n|:---|:---|\n| **交换律** | $A+B = B+A$；$AB = BA$ |\n| **结合律** | $(A+B)+C = A+(B+C)$；$(AB)C = A(BC)$ |\n| **分配律（与对或）** | $A(B+C) = AB+AC$ |\n| **分配律（或对与）** | $A+BC = (A+B)(A+C)$ |\n| **德摩根定律（反演律）** | $\\overline{AB} = \\bar{A}+\\bar{B}$；$\\overline{A+B} = \\bar{A}\\cdot\\bar{B}$ |\n| **0-1 律** | $A+0=A$；$A\\cdot1=A$；$A+1=1$；$A\\cdot0=0$ |\n| **互补律** | $A+\\bar{A}=1$；$A\\cdot\\bar{A}=0$ |\n| **幂等律** | $A+A=A$；$A\\cdot A=A$ |\n| **双重否定** | $\\bar{\\bar{A}}=A$ |\n\n> [!important]\n> **德摩根定律**是逻辑化简和门电路转换的核心工具：取反时，将与变或、或变与，并对每个变量取反。\n\n### 3.2 常用等式\n\n| 名称 | 公式 | 说明 |\n|:---|:---|:---|\n| **吸收律** | $A + AB = A$ | B 项被吸收 |\n| **吸收律** | $A(A+B) = A$ | B 项被吸收 |\n| **并项** | $AB + A\\bar{B} = A$ | 消去 B |\n| **消因子** | $A + \\bar{A}B = A + B$ | $\\bar{A}$ 被消去 |\n| **因式分解** | $(A+B)(A+C) = A + BC$ | 对偶形式 |\n| **冗余律** | $AB + \\bar{A}C + BC = AB + \\bar{A}C$ | $BC$ 为冗余项 |\n\n### 3.3 常用恒等式\n\n$$\n(A+B)(\\bar{A}+B) = B\n$$\n\n$$\nA \\oplus 0 = A,\\quad A \\oplus 1 = \\bar{A},\\quad A \\oplus A = 0,\\quad A \\oplus \\bar{A} = 1\n$$\n\n$$\nA \\oplus B = \\bar{A}B + A\\bar{B},\\quad A \\odot B = AB + \\bar{A}\\bar{B}\n$$\n\n> [!question] 待验证\n> 冗余律的推广形式：$AB + \\bar{A}C + BC^n = AB + \\bar{A}C$ 对于高次幂情形是否仍成立？\n\n---\n\n## 四、逻辑函数的建立与实现\n\n### 4.1 建立步骤\n\n1. **确定输入变量**：分析问题，找出所有影响输出的独立条件\n2. **确定输出变量**：明确需要表示的逻辑结果\n3. **列真值表**：枚举所有输入组合（$n$ 变量共 $2^n$ 行），填写对应输出\n4. **写逻辑表达式**：从真值表中输出为 1 的行写**最小项之和（SOP）**\n5. **化简**：用公式法或卡诺图化简（详见 [[concepts/digital/逻辑函数化简]]）\n\n### 4.2 用与非门实现（与非-与非式）\n\n> [!info] 新发现\n> 任何与或式均可两次取反，利用德摩根定律转换为**与非-与非式**，从而仅用 NAND 门实现：\n\n$$F = AC + AB = \\overline{\\overline{AC + AB}} = \\overline{\\overline{AC} \\cdot \\overline{AB}}$$\n\n```mermaid\ngraph LR\n  A1[\"A\"] --> N1[\"&\"]\n  C1[\"C\"] --> N1\n  N1 -->|\"AC\"| N3[\"&\"]\n\n  A2[\"A\"] --> N2[\"&\"]\n  B2[\"B\"] --> N2\n  N2 -->|\"AB\"| N3\n\n  N3 --> F[\"F = AC+AB\"]\n```\n\n说明：第一级两个 NAND 门分别取 $\\overline{AC}$ 和 $\\overline{AB}$，第二级 NAND 门将它们再取与非，即得 $F = AC + AB$。\n\n---\n\n## 关联连接\n\n- [[concepts/digital/计数制与编码]] — 数字电路的数制基础，与逻辑代数共同构成数字系统理论基础\n- [[concepts/digital/逻辑函数化简]] — 基于逻辑代数公式和卡诺图对逻辑函数进行最简化\n- [[concepts/digital/组合逻辑电路]] — 运用逻辑代数分析与设计组合逻辑电路的实践\n- [[concepts/digital/原码反码补码]] — 有符号数表示中涉及逻辑运算（如补码求反加一）\n"
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "File created successfully at: /home/mayon/Vaults/wiki/concepts/digital/逻辑代数.md"
+          }
+        ],
         "asyncStatus": "running",
         "agentId": "a0e9a9701a4b69878",
         "startedAt": 1777973596718
@@ -31,7 +60,19 @@
         "mode": "async",
         "isExpanded": false,
         "status": "running",
-        "toolCalls": [],
+        "toolCalls": [
+          {
+            "id": "toolu_016pFSa3kJSioAfrumAZUoWu",
+            "name": "Write",
+            "input": {
+              "file_path": "/home/mayon/Vaults/wiki/concepts/digital/逻辑函数化简.md",
+              "content": "---\ntitle: \"逻辑函数化简\"\ntype: concept\ntags:\n  - concept\n  - 数字电路\n  - 逻辑代数\naliases:\n  - Karnaugh Map\n  - 卡诺图\n  - K-map\n  - Boolean Minimization\nsources:\n  - raw/04-notes/IMG_20260309_110529.jpg\n  - raw/04-notes/IMG_20260309_115334.jpg\n  - raw/04-notes/IMG_20260309_115612.jpg\n  - raw/04-notes/IMG_20260309_120138.jpg\n  - raw/04-notes/IMG_20260323_110546.jpg\nlast_updated: 2026-05-05\n---\n\n> **一句话定义**：逻辑函数化简是通过布尔代数公式或卡诺图，将逻辑函数变换为所用门最少、门输入端最少的最简与或式，以降低电路实现成本。\n\n---\n\n## 一、最简形式定义\n\n逻辑函数的**最简与或式**须同时满足两个条件：\n\n1. **与项数最少** → 所用门电路（AND 门 + OR 门）数量最少\n2. **每个与项中变量数最少** → 每个门的输入端数量最少\n\n最小化简的工程目标：用最少的逻辑门实现给定的逻辑函数。\n\n> [!important]\n> 最简与或式并不唯一——不同的化简路径可能得到项数和变量数相同但形式不同的等价结果。\n\n---\n\n## 二、公式化简法\n\n利用布尔代数的基本定理和定律手动化简，适合变量较少或表达式有明显结构时使用。\n\n### 常用化简技巧\n\n| 技巧名称 | 公式 | 说明 |\n|:---|:---|:---|\n| 并项消元 | $AB + A\\bar{B} = A$ | 两项合并消去一个变量 |\n| 吸收律 | $A + AB = A$ | 冗余项直接吸收 |\n| 消因子 | $A + \\bar{A}B = A + B$ | 消去反变量因子 |\n| 冗余律 | $AB + \\bar{A}C + BC = AB + \\bar{A}C$ | BC 为冗余项可直接删去 |\n\n### 例题（课堂原题）\n\n化简 $F = \\bar{A}BC + AC + \\bar{A}B\\bar{C} + \\bar{A}B + BC + AB + \\bar{A}BC$\n\n**步骤一**：合并含 $\\bar{A}B$ 的项\n\n$$\\bar{A}B\\bar{C} + \\bar{A}BC + \\bar{A}B = \\bar{A}B(\\bar{C} + C) + \\bar{A}B = \\bar{A}B$$\n\n> 注：$\\bar{A}B$ 吸收了 $\\bar{A}B\\bar{C}$ 和 $\\bar{A}BC$。\n\n**步骤二**：展开 $AC$ 并利用吸收律\n\n$$AC + AB = A(C + B) = A$$\n\n> $A + AB = A$（吸收律），即 $A$ 吸收了 $AB$。\n\n**步骤三**：整理剩余项\n\n$$F = \\bar{A}B + A + BC$$\n\n**步骤四**：继续用消因子\n\n$$A + \\bar{A}B = A + B \\quad \\Rightarrow \\quad F = A + B + BC$$\n\n再由吸收律 $B + BC = B$：\n\n$$\\boxed{F = A + B + C}$$\n\n> [!question] 待验证\n> 上述化简的最终结果 $F = A + B + C$ 建议通过真值表逐一核对原式，确认等价性。\n\n---\n\n## 三、最小项标准式\n\n### 最小项定义\n\n**最小项**：$n$ 变量的乘积项，其中每个变量恰好出现**一次**（原变量或反变量），共有 $2^n$ 个。\n\n- 用 $m_i$ 表示（$i$ 为该乘积项对应输入的十进制值）\n- 每个最小项在唯一的输入组合下取值为 1\n\n**3 变量最小项对照表（A, B, C）**：\n\n| $i$ | A | B | C | 最小项 |\n|:---:|:---:|:---:|:---:|:---:|\n| 0 | 0 | 0 | 0 | $\\bar{A}\\bar{B}\\bar{C}$ |\n| 1 | 0 | 0 | 1 | $\\bar{A}\\bar{B}C$ |\n| 2 | 0 | 1 | 0 | $\\bar{A}B\\bar{C}$ |\n| 3 | 0 | 1 | 1 | $\\bar{A}BC$ |\n| 4 | 1 | 0 | 0 | $A\\bar{B}\\bar{C}$ |\n| 5 | 1 | 0 | 1 | $A\\bar{B}C$ |\n| 6 | 1 | 1 | 0 | $AB\\bar{C}$ |\n| 7 | 1 | 1 | 1 | $ABC$ |\n\n### 展开为标准式示例\n\n将 $F(A,B,C) = AB + A\\bar{C}$ 展开为最小项之和：\n\n$$AB = ABC + AB\\bar{C} = m_7 + m_6$$\n\n$$A\\bar{C} = AB\\bar{C} + A\\bar{B}\\bar{C} = m_6 + m_4$$\n\n合并（去重）：\n\n$$F(A,B,C) = \\Sigma m(4, 6, 7)$$\n\n> [!important]\n> 将函数展开为最小项标准式是填写卡诺图的前提。标准式中的每个 $m_i$ 对应卡诺图中值为 1 的格。\n\n---\n\n## 四、卡诺图（Karnaugh Map）\n\n### 基本原理\n\n卡诺图是真值表的**方格图形式**，通过将最小项按格雷码（Grey Code）顺序排列，使**几何相邻的格在逻辑上只差一个变量**，从而直观地发现可合并的最小项。\n\n> [!info] 格雷码排列\n> 卡诺图行列均按格雷码顺序（$00 \\to 01 \\to 11 \\to 10$）排列，保证任意相邻两格只有**一位**不同，满足并项消元条件 $AB + A\\bar{B} = A$。\n\n---\n\n### 2 变量卡诺图\n\n| $A \\backslash B$ | 0 | 1 |\n|:---:|:---:|:---:|\n| **0** | $m_0$ | $m_1$ |\n| **1** | $m_2$ | $m_3$ |\n\n---\n\n### 3 变量卡诺图（行 = A，列 = BC）\n\n| $A \\backslash BC$ | 00 | 01 | 11 | 10 |\n|:---:|:---:|:---:|:---:|:---:|\n| **0** | $m_0$ | $m_1$ | $m_3$ | $m_2$ |\n| **1** | $m_4$ | $m_5$ | $m_7$ | $m_6$ |\n\n---\n\n### 4 变量卡诺图（行 = AB，列 = CD）\n\n| $AB \\backslash CD$ | 00 | 01 | 11 | 10 |\n|:---:|:---:|:---:|:---:|:---:|\n| **00** | $m_0$ | $m_1$ | $m_3$ | $m_2$ |\n| **01** | $m_4$ | $m_5$ | $m_7$ | $m_6$ |\n| **11** | $m_{12}$ | $m_{13}$ | $m_{15}$ | $m_{14}$ |\n| **10** | $m_8$ | $m_9$ | $m_{11}$ | $m_{10}$ |\n\n---\n\n### 卡诺图合并规则\n\n> [!important] 合并规则（六条）\n> 1. **几何相邻**（物理相邻）：左右相邻、上下相邻，以及首尾卷起相邻（卡诺图可视为圆柱面再折叠成环面）。\n> 2. **逻辑相邻**（对称相邻）：4 变量卡诺图的四角 $m_0, m_2, m_8, m_{10}$ 也相互相邻。\n> 3. 每次合并的 1 的个数必须是 $2^n$（即 1、2、4、8……），不能是奇数或其他值。\n> 4. **圈越大越好**：圈越大，消去的变量越多，得到的与项越简。\n> 5. **圈数越少越好**：最终与或式的与项数等于圈数。\n> 6. **每个 1 至少被圈一次**；允许重复圈（重复圈某个 1 以扩大另一个圈是合法的）。\n\n**读圈方法**：对一个圈，检查圈内所有格的每个变量取值——**在圈内保持不变的变量保留，发生变化的变量消去**。\n\n---\n\n### 例题\n\n#### 例 1（4 变量）\n\n$$F_1 = \\bar{A}BCD + ABCD + \\bar{A}B\\bar{C} + AB\\bar{D} + \\bar{A}BC + BCD$$\n\n填入 4 变量卡诺图，找出最优圈组合：\n\n$$\\boxed{F_1 = \\bar{A}B + BC + \\bar{A}C\\bar{D} + B\\bar{D}}$$\n\n> 各圈分别对应：$\\bar{A}B$（合并 $m_2, m_3, m_6, m_7$ 等）、$BC$（合并含 $BC=11$ 的格）、$\\bar{A}C\\bar{D}$、$B\\bar{D}$。\n\n---\n\n#### 例 2（3 变量，含冗余项）\n\n$$F_2 = AB + \\bar{A}C + BC$$\n\n展开为最小项：\n\n- $AB = m_6 + m_7$\n- $\\bar{A}C = m_1 + m_3$\n- $BC = m_3 + m_7$（$m_3$ 和 $m_7$ 已被前两项覆盖，**BC 为冗余项**）\n\n填入 3 变量卡诺图：\n\n| $A \\backslash BC$ | 00 | 01 | 11 | 10 |\n|:---:|:---:|:---:|:---:|:---:|\n| **0** | 0 | 1 | 1 | 0 |\n| **1** | 0 | 0 | 1 | 1 |\n\n圈 1：$m_1, m_3$（列 BC=01 和 11，行 A=0）→ $\\bar{A}C$\n\n圈 2：$m_6, m_7$（列 BC=10 和 11，行 A=1）→ $AB$\n\n$$\\boxed{F_2 = \\bar{A}C + AB}$$\n\n> BC 项为冗余项，可由冗余律 $AB + \\bar{A}C + BC = AB + \\bar{A}C$ 直接删去。\n\n---\n\n#### 例 3（4 变量，最小项表示）\n\n$$F_3 = \\Sigma m(4,5,6,7,8,9,10,11,12,13), \\quad \\text{变量 A, B, C, D}$$\n\n填入 4 变量卡诺图：\n\n| $AB \\backslash CD$ | 00 | 01 | 11 | 10 |\n|:---:|:---:|:---:|:---:|:---:|\n| **00** | 0 | 0 | 0 | 0 |\n| **01** | 1 | 1 | 1 | 1 |\n| **11** | 1 | 1 | 0 | 0 |\n| **10** | 1 | 1 | 0 | 0 |\n\n**化简步骤**：\n\n1. 圈 $m_4 \\sim m_{11}$（$AB=01$ 和 $AB=10$ 两行，共 8 格）→ 保留 A 和 $\\bar{A}$，消去 B，实为 $\\bar{B}$... 需重新分析：\n   - $m_4, m_5, m_6, m_7$（AB=01 整行）→ $\\bar{A}B$\n   - $m_8, m_9, m_{10}, m_{11}$（AB=10 整行）→ $A\\bar{B}$\n   - $m_{12}, m_{13}$（AB=11，CD=00 和 01）→ $AB\\bar{C}$ 的一部分，可与 $m_4, m_5$ 合并？检查：$m_4(0100), m_5(0101), m_{12}(1100), m_{13}(1101)$ → B=1, C=0，变量 A 和 D 变化 → $B\\bar{C}$\n2. 最优分组：\n   - 圈 $m_4, m_5, m_6, m_7, m_8, m_9, m_{10}, m_{11}$（8 格）：A 变化，B 变化，C 变化，D 变化 → 不合法，需重新圈\n   - 圈 $m_4, m_5, m_{12}, m_{13}$（4 格，列 CD=00/01，行 AB=01/11）→ $B\\bar{C}$（B=1，C=0 不变；A 和 D 变化消去）\n\n$$\\boxed{F_3 = \\bar{A}B + A\\bar{B} + B\\bar{C}}$$\n\n> [!question] 待验证\n> 例 3 的分组方案建议对照完整卡诺图手动验证，确认上述三个圈能覆盖所有指定的最小项且无遗漏。\n\n---\n\n## 五、含无关项的化简\n\n来源：课堂黑板笔记（2026-03-23）\n\n### 无关项的两类情形\n\n| 类型 | 含义 | 在卡诺图中 |\n|:---|:---|:---|\n| **约束项**（禁止输入） | 某些输入组合在实际中不会出现（如 BCD 码中 1010~1111） | 填入 $\\times$（或 d） |\n| **任意项** | 输出值对系统功能无影响 | 填入 $\\times$（或 d） |\n\n### 化简策略\n\n> [!important] 利用无关项的原则\n> - 无关项的函数值可以**任意指定为 0 或 1**。\n> - 化简时，若将某个无关项视为 1 能**扩大圈的覆盖范围**，则将其视为 1；否则视为 0 忽略。\n> - 目标：灵活利用无关项，合并更多最小项，得到更简的与或式。\n\n**两种化简思路**：\n\n1. **以 1 为主**：先用实际为 1 的格画圈，再用 $\\times$ 扩大圈，最终只保留有 1 的格都被覆盖的方案。\n2. **以 0 为主（求补函数法）**：先圈 0，$\\times$ 视为 0 使用；得到 $\\bar{F}$ 后取反得 $F$ 的最简积之和式（POS 形式）。\n\n### 例 1（3 变量）\n\n$$F_2 = \\Sigma m(0,1,2,3,7) + \\Sigma d(4,5,6), \\quad \\text{变量 A, B, C}$$\n\n填入 3 变量卡诺图（$m_0 \\sim m_3$ 和 $m_7$ 填 1，$m_4 \\sim m_6$ 填 $\\times$）：\n\n| $A \\backslash BC$ | 00 | 01 | 11 | 10 |\n|:---:|:---:|:---:|:---:|:---:|\n| **0** | 1 | 1 | 1 | 1 |\n| **1** | × | × | 1 | × |\n\n利用无关项，8 格全部可视为 1，化简为：\n\n$$\\boxed{F_2 = 1}$$\n\n### 例 2（4 变量）\n\n$$F_c = \\Sigma m(2,4,6,8,10,14) + \\Sigma d(1,5,9,10,11,12), \\quad \\text{变量 A, B, C, D}$$\n\n填入 4 变量卡诺图：\n\n| $AB \\backslash CD$ | 00 | 01 | 11 | 10 |\n|:---:|:---:|:---:|:---:|:---:|\n| **00** | 0 | × | 0 | 1 |\n| **01** | 1 | × | 0 | 1 |\n| **11** | × | 0 | 0 | 1 |\n| **10** | 1 | × | × | 1 |\n\n> 注：$m_{10}$ 同时出现在 $\\Sigma m$ 和 $\\Sigma d$ 中，按实际为 1 的格处理。\n\n合并：CD=10 整列（$m_2, m_6, m_{14}, m_{10}$）均为 1 或 ×，加上无关项扩大为整个 $\\bar{D}$ 列 → 所有 D=0 的格。\n\n$$\\boxed{F_c = \\bar{D}}$$\n\n> 利用无关项后，原本 6 个零散的最小项被大幅化简为单变量函数 $\\bar{D}$，体现了无关项的巨大化简潜力。\n\n---\n\n## 关联连接\n\n- [[concepts/digital/逻辑代数]] — 公式化简法所依赖的布尔代数定律（吸收律、冗余律、消因子等）的来源\n- [[concepts/digital/组合逻辑电路]] — 逻辑函数化简是组合逻辑电路设计的核心步骤，最简与或式直接对应两级门电路实现\n- [[concepts/digital/锁存器和触发器]] — 时序逻辑电路的次态方程同样需要逻辑函数化简，卡诺图在触发器状态转换分析中广泛应用\n"
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "File created successfully at: /home/mayon/Vaults/wiki/concepts/digital/逻辑函数化简.md"
+          }
+        ],
         "asyncStatus": "running",
         "agentId": "a9523a0ab56278afa",
         "startedAt": 1777973637556
@@ -72,16 +113,18 @@
         "agentId": "a10c7690ae9550860",
         "startedAt": 1777973807093
       }
-    }
+    },
+    "providerSessionId": "99c9b319-17b4-47d0-ae9f-54d2f50b94ae"
   },
   "currentNote": "wiki/concepts/digital/锁存器和触发器.md",
   "usage": {
     "model": "sonnet",
-    "inputTokens": 1,
-    "cacheCreationInputTokens": 4694,
-    "cacheReadInputTokens": 123354,
-    "contextWindow": 200000,
-    "contextTokens": 128049,
-    "percentage": 64
+    "inputTokens": 143,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 102144,
+    "contextWindow": 1000000,
+    "contextTokens": 102287,
+    "percentage": 10,
+    "contextWindowIsAuthoritative": true
   }
 }
