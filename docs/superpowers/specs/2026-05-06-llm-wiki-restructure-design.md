@@ -38,7 +38,6 @@
 ## 新目录结构
 
 ```
-Vaults/
 ├── raw/
 │   ├── 01-articles/          # 网页剪藏（Obsidian Web Clipper）
 │   ├── 02-papers/            # 论文、PDF
@@ -109,7 +108,7 @@ Vaults/
 **Pipeline（9步）**：
 
 1. **Read source** — Obsidian CLI 优先（`obsidian vault read`），不可用时降级到文件读取工具
-2. **Discuss with user** — 提炼 3-5 条收获，确认方向；**禁止跳过**
+2. **Discuss with user** — 提炼 3-5 条收获，确认方向；**禁止跳过**。提问须遵循"苏格拉底式引导"原则：不直接给出结论，而是通过精准的追问引导用户自行推导；语言严谨规范；主动寻找与 wiki 已有领域的跨域关联（如数字电路与 C++ 底层表示、控制论与 AI 优化算法）并以此作为追问切入点
 3. **Extract content** — 识别实体、概念、主旨；按 tags 分类（动态扩展）
 4. **Create source summary** — `wiki/sources/摘要-{slug}.md`
 5. **Network knowledge** — 更新/创建 entities、concepts 页（扁平路径）；冲突立即暂停报告
@@ -135,7 +134,7 @@ Vaults/
 
 1. 读 `wiki/index.md` 定位相关页面
 2. 深度阅读目标页 + 追溯双链上下文（最多 3 跳）
-3. 综合回答，内联 `[[wikilink]]` 引用
+3. 综合回答，内联 `[[wikilink]]` 引用；语言严谨规范，区分"定义/定理/推论/猜想"等层次；回答末尾附 1-2 个"延伸追问"——指向用户可能尚未意识到的深层问题或跨领域联系，引导进一步思考而非终止对话
 4. **主动提问是否保存**——凡回答超过 3 句，询问是否沉淀为 `wiki/syntheses/`
 
 **降级策略**：wiki 无内容时声明后仍作答，标注"通用知识，未摄入相关资料"。
