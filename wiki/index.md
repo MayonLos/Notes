@@ -1,6 +1,10 @@
 ---
 title: Wiki 索引
-date: 2026-05-06
+type: index
+tags:
+  - index
+  - meta
+last_updated: 2026-05-06
 ---
 
 # Wiki 索引
