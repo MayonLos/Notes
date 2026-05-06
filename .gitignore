@@ -19,6 +19,10 @@ desktop.ini
 *.swp
 *.log
 
+# CLI runtime data
+gemini-scribe/
+.claudian/
+
 # Common editor folders
 .vscode/
 .idea/

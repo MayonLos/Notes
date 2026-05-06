@@ -6,8 +6,7 @@ user-invocable: true
 
 # wiki-lint — 知识图谱健康巡检技能
 
-> **Vault 根目录**：`D:\Obsidian Vault\`
-> **Schema**：先读 `D:\Obsidian Vault\CLAUDE.md` 了解完整约定
+> **Schema**：先读 `CLAUDE.md` 了解完整约定
 
 ---
 
@@ -15,12 +14,12 @@ user-invocable: true
 
 | 作用 | 路径 |
 |:---|:---|
-| 全局索引 | `D:\Obsidian Vault\wiki\index.md` |
-| 操作日志 | `D:\Obsidian Vault\wiki\log.md` |
-| Wiki 根目录 | `D:\Obsidian Vault\wiki\` |
-| 概念子目录 | `concepts\programming\`、`concepts\theory\`、`concepts\embedded\`、`concepts\digital\` |
-| 实体 / 来源 / 对比 / 综合 | `entities\`、`sources\`、`comparisons\`、`syntheses\` |
-| 原始资料（待处理） | `D:\Obsidian Vault\raw\` |
+| 全局索引 | `wiki/index.md` |
+| 操作日志 | `wiki/log.md` |
+| Wiki 根目录 | `wiki/` |
+| 概念子目录 | `concepts/programming/`、`concepts/theory/`、`concepts/embedded/`、`concepts/digital/` |
+| 实体 / 来源 / 对比 / 综合 | `entities/`、`sources/`、`comparisons/`、`syntheses/` |
+| 原始资料（待处理） | `raw/` |
 
 ---
 
@@ -131,23 +130,23 @@ obsidian vault="Obsidian Vault" search query="path:raw" limit=50
 
 **修复未同步索引**：
 ```bash
-obsidian vault="Obsidian Vault" append \
-  path="wiki/index.md" \
-  content="\n- [[concepts/theory/Laplace变换]] — 拉普拉斯变换基础"
+obsidian vault="Obsidian Vault" append /
+  path="wiki/index.md" /
+  content="/n- [[concepts/theory/Laplace变换]] — 拉普拉斯变换基础"
 ```
 
 **修复孤儿页面（添加关联）**：
 ```bash
-obsidian vault="Obsidian Vault" append \
-  path="wiki/concepts/digital/数字系统综合.md" \
-  content="\n- [[concepts/digital/组合逻辑电路]] — 相关概念"
+obsidian vault="Obsidian Vault" append /
+  path="wiki/concepts/digital/数字系统综合.md" /
+  content="/n- [[concepts/digital/组合逻辑电路]] — 相关概念"
 ```
 
 每次修复后追加日志：
 ```bash
-obsidian vault="Obsidian Vault" append \
-  path="wiki/log.md" \
-  content="\n## [{今日日期}] lint | 修复了 N 个问题\n- **变更**: <修复内容>"
+obsidian vault="Obsidian Vault" append /
+  path="wiki/log.md" /
+  content="/n## [{今日日期}] lint | 修复了 N 个问题/n- **变更**: <修复内容>"
 ```
 
 ---

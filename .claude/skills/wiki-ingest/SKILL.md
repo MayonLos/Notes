@@ -6,8 +6,7 @@ user-invocable: true
 
 # wiki-ingest — 资料摄入技能
 
-> **Vault 根目录**：`D:\Obsidian Vault\`
-> **Schema**：先读 `D:\Obsidian Vault\CLAUDE.md` 了解完整约定
+> **Schema**：先读 `CLAUDE.md` 了解完整约定
 
 ---
 
@@ -15,19 +14,19 @@ user-invocable: true
 
 | 作用 | 路径 |
 |:---|:---|
-| 网页剪藏文章 | `D:\Obsidian Vault\raw\01-articles\` |
-| 论文/PDF | `D:\Obsidian Vault\raw\02-papers\` |
-| 视频/播客转录 | `D:\Obsidian Vault\raw\03-transcripts\` |
-| 手写笔记 | `D:\Obsidian Vault\raw\04-notes\` |
-| 已归档（禁止读取） | `D:\Obsidian Vault\raw\09-archive\` |
-| 资料摘要 | `D:\Obsidian Vault\wiki\sources\` |
-| 实体页 | `D:\Obsidian Vault\wiki\entities\` |
-| 概念页（编程） | `D:\Obsidian Vault\wiki\concepts\programming\` |
-| 概念页（理论） | `D:\Obsidian Vault\wiki\concepts\theory\` |
-| 概念页（嵌入式） | `D:\Obsidian Vault\wiki\concepts\embedded\` |
-| 概念页（数字电路） | `D:\Obsidian Vault\wiki\concepts\digital\` |
-| 全局索引 | `D:\Obsidian Vault\wiki\index.md` |
-| 操作日志 | `D:\Obsidian Vault\wiki\log.md` |
+| 网页剪藏文章 | `raw/01-articles/` |
+| 论文/PDF | `raw/02-papers/` |
+| 视频/播客转录 | `raw/03-transcripts/` |
+| 手写笔记 | `raw/04-notes/` |
+| 已归档（禁止读取） | `raw/09-archive/` |
+| 资料摘要 | `wiki/sources/` |
+| 实体页 | `wiki/entities/` |
+| 概念页（编程） | `wiki/concepts/programming/` |
+| 概念页（理论） | `wiki/concepts/theory/` |
+| 概念页（嵌入式） | `wiki/concepts/embedded/` |
+| 概念页（数字电路） | `wiki/concepts/digital/` |
+| 全局索引 | `wiki/index.md` |
+| 操作日志 | `wiki/log.md` |
 
 ---
 
@@ -81,8 +80,8 @@ obsidian vault="Obsidian Vault" read path="raw/01-articles/文件名.md"
 ### 步骤 4：创建资料摘要页
 
 ```bash
-obsidian vault="Obsidian Vault" create \
-  path="wiki/sources/摘要-{slug}.md" \
+obsidian vault="Obsidian Vault" create /
+  path="wiki/sources/摘要-{slug}.md" /
   content="..." silent
 ```
 
@@ -128,14 +127,14 @@ last_updated: <今日日期>
 
 ```bash
 # 创建新概念页
-obsidian vault="Obsidian Vault" create \
-  path="wiki/concepts/<领域>/ConceptName.md" \
+obsidian vault="Obsidian Vault" create /
+  path="wiki/concepts/<领域>/ConceptName.md" /
   content="..." silent
 
 # 向已有页面追加内容
-obsidian vault="Obsidian Vault" append \
-  path="wiki/concepts/<领域>/ConceptName.md" \
-  content="\n## 补充信息（来自 [[sources/摘要-{slug}]]）\n..."
+obsidian vault="Obsidian Vault" append /
+  path="wiki/concepts/<领域>/ConceptName.md" /
+  content="/n## 补充信息（来自 [[sources/摘要-{slug}]]）/n..."
 ```
 
 所有页面必须包含 `## 关联连接` 区域，使用 `[[双链]]`，**不能产生孤岛页面**。
@@ -145,9 +144,9 @@ obsidian vault="Obsidian Vault" append \
 如果新资料影响整体理解框架：
 
 ```bash
-obsidian vault="Obsidian Vault" append \
-  path="wiki/synthesis.md" \
-  content="\n> [!info] 新发现（来自 [[sources/摘要-{slug}]]）\n> <影响说明>"
+obsidian vault="Obsidian Vault" append /
+  path="wiki/synthesis.md" /
+  content="/n> [!info] 新发现（来自 [[sources/摘要-{slug}]]）/n> <影响说明>"
 ```
 
 ### 步骤 7：更新全局索引
@@ -166,9 +165,9 @@ obsidian vault="Obsidian Vault" read path="wiki/index.md"
 ### 步骤 8：追加操作日志（Append-only）
 
 ```bash
-obsidian vault="Obsidian Vault" append \
-  path="wiki/log.md" \
-  content="\n## [<今日日期>] ingest | <资料标题>\n- **变更**: 新增 [[sources/摘要-{slug}]]，更新 [[wiki/index.md]]\n- **冲突**: 无"
+obsidian vault="Obsidian Vault" append /
+  path="wiki/log.md" /
+  content="/n## [<今日日期>] ingest | <资料标题>/n- **变更**: 新增 [[sources/摘要-{slug}]]，更新 [[wiki/index.md]]/n- **冲突**: 无"
 ```
 
 ### 步骤 9：归档源文件
@@ -197,6 +196,6 @@ obsidian vault="Obsidian Vault" append \
 
 ## 关联技能
 
-- Schema：`D:\Obsidian Vault\CLAUDE.md`
+- Schema：`CLAUDE.md`
 - Obsidian 操作：`obsidian-cli` skill
 - Markdown 规范：`obsidian-markdown` skill

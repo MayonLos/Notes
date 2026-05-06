@@ -6,8 +6,7 @@ user-invocable: true
 
 # wiki-query — 知识库查询技能
 
-> **Vault 根目录**：`D:\Obsidian Vault\`
-> **Schema**：先读 `D:\Obsidian Vault\CLAUDE.md` 了解完整约定
+> **Schema**：先读 `CLAUDE.md` 了解完整约定
 
 ---
 
@@ -15,17 +14,17 @@ user-invocable: true
 
 | 作用 | 路径 |
 |:---|:---|
-| 全局索引（查询入口） | `D:\Obsidian Vault\wiki\index.md` |
-| 操作日志 | `D:\Obsidian Vault\wiki\log.md` |
-| 概念页（编程） | `D:\Obsidian Vault\wiki\concepts\programming\` |
-| 概念页（理论） | `D:\Obsidian Vault\wiki\concepts\theory\` |
-| 概念页（嵌入式） | `D:\Obsidian Vault\wiki\concepts\embedded\` |
-| 概念页（数字电路） | `D:\Obsidian Vault\wiki\concepts\digital\` |
-| 实体页 | `D:\Obsidian Vault\wiki\entities\` |
-| 资料摘要 | `D:\Obsidian Vault\wiki\sources\` |
-| 对比页 | `D:\Obsidian Vault\wiki\comparisons\` |
-| 综合论述 | `D:\Obsidian Vault\wiki\syntheses\` |
-| 整体综合 | `D:\Obsidian Vault\wiki\synthesis.md` |
+| 全局索引（查询入口） | `wiki/index.md` |
+| 操作日志 | `wiki/log.md` |
+| 概念页（编程） | `wiki/concepts/programming/` |
+| 概念页（理论） | `wiki/concepts/theory/` |
+| 概念页（嵌入式） | `wiki/concepts/embedded/` |
+| 概念页（数字电路） | `wiki/concepts/digital/` |
+| 实体页 | `wiki/entities/` |
+| 资料摘要 | `wiki/sources/` |
+| 对比页 | `wiki/comparisons/` |
+| 综合论述 | `wiki/syntheses/` |
+| 整体综合 | `wiki/synthesis.md` |
 
 ---
 
@@ -94,9 +93,9 @@ obsidian vault="Obsidian Vault" backlinks file="ConceptName"
 用户同意后：
 
 ```bash
-obsidian vault="Obsidian Vault" create \
-  path="wiki/syntheses/{主题描述}.md" \
-  content="---\ntitle: \"{标题}\"\ntype: synthesis\ntags:\n  - synthesis\nlast_updated: {今日日期}\n---\n\n{回答内容}\n\n## 关联连接\n\n- [[wiki/index.md]] — 全局索引\n" \
+obsidian vault="Obsidian Vault" create /
+  path="wiki/syntheses/{主题描述}.md" /
+  content="---/ntitle: /"{标题}/"/ntype: synthesis/ntags:/n  - synthesis/nlast_updated: {今日日期}/n---/n/n{回答内容}/n/n## 关联连接/n/n- [[wiki/index.md]] — 全局索引/n" /
   silent
 ```
 
@@ -105,9 +104,9 @@ obsidian vault="Obsidian Vault" create \
 ### 步骤 5：记录操作日志
 
 ```bash
-obsidian vault="Obsidian Vault" append \
-  path="wiki/log.md" \
-  content="\n## [{今日日期}] query | {问题简述}\n- **输出**: {引用页面列表，或\"即时回答未保存\"}"
+obsidian vault="Obsidian Vault" append /
+  path="wiki/log.md" /
+  content="/n## [{今日日期}] query | {问题简述}/n- **输出**: {引用页面列表，或/"即时回答未保存/"}"
 ```
 
 ---
