@@ -30,8 +30,8 @@ user-invocable: true
 ### Step 1: Read Global View
 
 ```bash
-obsidian vault="Obsidian Vault" read path="wiki/index.md"
-obsidian vault="Obsidian Vault" read path="wiki/log.md"
+obsidian vault="Vaults" read path="wiki/index.md"
+obsidian vault="Vaults" read path="wiki/log.md"
 ```
 
 Extract all `[[page-name]]` references from index.md → build **registered pages set**.
@@ -41,11 +41,9 @@ Extract recent ingestion dates and topics from log.md → build **ingestion time
 
 ### Step 2: Scan All wiki/ Files
 
-List all `.md` files under `wiki/` (excluding `index.md`, `log.md`, `synthesis.md`) → build **actual files set**.
+Enumerate all `.md` files under `wiki/` (excluding `index.md`, `log.md`, `synthesis.md`) → build **actual files set**.
 
-```bash
-obsidian vault="Obsidian Vault" search query="type:" limit=200
-```
+The LLM should use the most reliable available method on the current platform. Obsidian CLI is preferred; platform-native directory listing is an acceptable fallback. The goal is a complete, accurate list of wiki page paths.
 
 ---
 
@@ -60,22 +58,25 @@ Compare the two sets:
 
 ### Step 4: Wikilink Health Check
 
-Read all wiki `.md` files, extract all `[[links]]`:
+Extract all `[[links]]` from every wiki `.md` file:
 
-1. Link points to a non-existent page → **Dead link** ❌
-2. Page is never referenced by any other page → **Orphan page** ⚠️
+- Use Obsidian CLI backlinks for individual pages. For global wikilink extraction, use platform-native tools (e.g., `grep` on Unix, `Select-String` on Windows) to scan all `.md` files under `wiki/`.
+- Alternatively, for each page in the actual files set, run Obsidian CLI backlinks to identify inbound references.
 
 ```bash
-obsidian vault="Obsidian Vault" backlinks file="PageName"
+obsidian vault="Vaults" backlinks file="PageName"
 ```
+
+1. Link target is not in the actual files set → **Dead link** ❌
+2. Page is never referenced by any other page (no inbound backlinks) → **Orphan page** ⚠️
 
 ---
 
 ### Step 5: Cognitive Conflict Audit
 
 ```bash
-obsidian vault="Obsidian Vault" search query="知识冲突" limit=50
-obsidian vault="Obsidian Vault" search query="[!warning]" limit=50
+obsidian vault="Vaults" search query="知识冲突" limit=50
+obsidian vault="Vaults" search query="[!warning]" limit=50
 ```
 
 For each result: identify the conflicting page, the parties in conflict, and whether it has been resolved.
@@ -87,7 +88,7 @@ For each result: identify the conflicting page, the parties in conflict, and whe
 Find pages where `last_updated` is more than **90 days ago** AND newer sources on the same topic appear in the log:
 
 ```bash
-obsidian vault="Obsidian Vault" search query="last_updated" limit=200
+obsidian vault="Vaults" search query="last_updated" limit=200
 ```
 
 Cross-reference with the ingestion timeline from Step 1. Flag pages where the `last_updated` date predates a log entry on the same topic — these may reflect superseded knowledge.
@@ -97,20 +98,18 @@ Cross-reference with the ingestion timeline from Step 1. Flag pages where the `l
 ### Step 7: Knowledge Gap Scan
 
 ```bash
-obsidian vault="Obsidian Vault" search query="待补充" limit=50
-obsidian vault="Obsidian Vault" search query="待验证" limit=50
-obsidian vault="Obsidian Vault" search query="[!todo]" limit=50
+obsidian vault="Vaults" search query="待补充" limit=50
+obsidian vault="Vaults" search query="待验证" limit=50
+obsidian vault="Vaults" search query="[!todo]" limit=50
 ```
 
 ---
 
 ### Step 8: Inbox Backlog Check
 
-Count unarchived files in `raw/` (excluding `09-archive/`):
+Enumerate all unarchived files under `raw/` (exclude `09-archive/` entirely). Count how many source files are waiting to be ingested.
 
-```bash
-obsidian vault="Obsidian Vault" search query="path:raw" limit=100
-```
+Use Obsidian CLI if available; fall back to platform-native file enumeration. The key metric is: how many files in `raw/01-04/` and `raw/05-wiki-export/` have not yet been ingested? Each file found is an item in the inbox backlog.
 
 ---
 
@@ -126,11 +125,11 @@ Generate this report after completing all 8 steps — do not modify any files be
 
 ### ⚠️ 黄灯项（需关注）
 - **孤儿页面 (N 个)**：
-  - [[concepts/ConceptName]]：无入站链接 → 建议：在相关页添加关联
+  - [[ConceptName]]：无入站链接 → 建议：在相关页添加关联
 - **未同步索引 (N 个)**：
   - `wiki/concepts/ConceptName.md` → 建议：注册到 index.md
 - **知识过时 (N 个)**：
-  - [[concepts/ConceptName]]：last_updated 2025-12-01，已有 2026-03 的相关摄入 → 建议：重新摄入更新来源
+  - [[ConceptName]]：last_updated 2025-12-01，已有 2026-03 的相关摄入 → 建议：重新摄入更新来源
 - **未处理收件箱 (N 个)**：
   - `raw/01-articles/article.md` → 建议：运行 `/ingest`
 
@@ -141,12 +140,12 @@ Generate this report after completing all 8 steps — do not modify any files be
   - [[ConflictPage]]：<description of conflict>
 
 ### ⬜ 知识空白 (N 个)
-- [[concepts/ConceptPage]] 中 [!todo]：<description> → 建议：搜索关键词 "<term>"
+- [[ConceptPage]] 中 [!todo]：<description> → 建议：搜索关键词 "<term>"
 
 ### 📥 建议摄入清单
 根据以上知识空白与过时页面，建议优先搜集：
-1. <topic 1> — 填补 [[concepts/X]] 的空白
-2. <topic 2> — 解决 [[concepts/Y]] 的过时问题
+1. <topic 1> — 填补 [[X]] 的空白
+2. <topic 2> — 解决 [[Y]] 的过时问题
 
 ### 🛠️ 下一步行动
 1. 是否自动修复未同步索引？（我可以执行）
@@ -161,25 +160,25 @@ Generate this report after completing all 8 steps — do not modify any files be
 **Fix unsynced index entry**:
 
 ```bash
-obsidian vault="Obsidian Vault" append \
+obsidian vault="Vaults" append \
   path="wiki/index.md" \
-  content="\n- [[concepts/ConceptName]] \`#tag\` — one-line definition"
+  content="\n- [[ConceptName]] \`#tag\` — one-line definition"
 ```
 
 **Fix orphan page** (add cross-reference from a related page):
 
 ```bash
-obsidian vault="Obsidian Vault" append \
+obsidian vault="Vaults" append \
   path="wiki/concepts/RelatedConcept.md" \
-  content="\n- [[concepts/OrphanConcept]] — <relationship>"
+  content="\n- [[OrphanConcept]] — <relationship>"
 ```
 
 **Log each fix**:
 
 ```bash
-obsidian vault="Obsidian Vault" append \
+obsidian vault="Vaults" append \
   path="wiki/log.md" \
-  content="\n## [{today}] lint | Fixed N issues\n- **Changes**: <specific fix description>"
+  content="\n## [{today}] lint | Fixed N issues\n- **变更**: <specific fix description>"
 ```
 
 ---

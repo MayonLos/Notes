@@ -49,7 +49,7 @@ Selected automatically based on question type, or specified by the user:
 Always the first action, no exceptions.
 
 ```bash
-obsidian vault="Obsidian Vault" read path="wiki/index.md"
+obsidian vault="Vaults" read path="wiki/index.md"
 ```
 
 Identify all relevant concepts, entities, sources, and synthesis pages from the index.
@@ -59,14 +59,14 @@ Identify all relevant concepts, entities, sources, and synthesis pages from the 
 ### Step 2: Deep-Read Target Pages
 
 ```bash
-obsidian vault="Obsidian Vault" read path="wiki/concepts/ConceptName.md"
-obsidian vault="Obsidian Vault" read path="wiki/sources/摘要-slug.md"
+obsidian vault="Vaults" read path="wiki/concepts/ConceptName.md"
+obsidian vault="Vaults" read path="wiki/sources/摘要-slug.md"
 ```
 
 Follow wikilinks up to **3 hops** to gather full context. Use backlinks to find pages that reference the topic:
 
 ```bash
-obsidian vault="Obsidian Vault" backlinks file="ConceptName"
+obsidian vault="Vaults" backlinks file="ConceptName"
 ```
 
 For broad questions, also read `wiki/synthesis.md` for the overall understanding framework.
@@ -80,12 +80,12 @@ Structure the answer with inline `[[wikilink]]` citations:
 ```
 ## 回答：<question>
 
-<Synthesized answer referencing [[concepts/ConceptName]] and [[sources/摘要-slug]]…>
+<Synthesized answer referencing [[ConceptName]] and [[摘要-slug]]…>
 
 ### 依据
 
-- [[concepts/ConceptName]] — <key point drawn from this page>
-- [[sources/摘要-source-slug]] — <what this source contributed>
+- [[ConceptName]] — <key point drawn from this page>
+- [[摘要-source-slug]] — <what this source contributed>
 ```
 
 **Language standards**:
@@ -116,34 +116,34 @@ If the answer is more than 3 sentences, always ask:
 If yes, create the synthesis page:
 
 ```bash
-obsidian vault="Obsidian Vault" create \
+obsidian vault="Vaults" create \
   path="wiki/syntheses/{topic-slug}.md" \
-  content="---\ntitle: \"{title}\"\ntype: synthesis\ntags:\n  - synthesis\n  - <domain-tag>\nlast_updated: {today}\n---\n\n{answer content}\n\n## 关联连接\n\n- [[index]] — 全局索引\n- [[concepts/RelatedConcept]] — <relationship>\n" \
+  content="---\ntitle: \"{title}\"\ntype: synthesis\ntags:\n  - synthesis\n  - <domain-tag>\nlast_updated: {today}\n---\n\n{answer content}\n\n## 关联连接\n\n- [[index]] — 全局索引\n- [[RelatedConcept]] — <relationship>\n" \
   silent
 ```
 
 Register in `wiki/index.md` under the Syntheses section:
 
 ```bash
-obsidian vault="Obsidian Vault" append \
+obsidian vault="Vaults" append \
   path="wiki/index.md" \
-  content="\n- [[syntheses/{slug}]] — <one-line description of what question this answers>"
+  content="\n- [[{slug}]] — <one-line description of what question this answers>"
 ```
 
 Append to `wiki/log.md`:
 
 ```bash
-obsidian vault="Obsidian Vault" append \
+obsidian vault="Vaults" append \
   path="wiki/log.md" \
-  content="\n## [{today}] query | {question summary}\n- **Output**: saved [[syntheses/{slug}]]"
+  content="\n## [{today}] query | {question summary}\n- **输出**: saved [[{slug}]]"
 ```
 
 If not saved, still log:
 
 ```bash
-obsidian vault="Obsidian Vault" append \
+obsidian vault="Vaults" append \
   path="wiki/log.md" \
-  content="\n## [{today}] query | {question summary}\n- **Output**: inline answer, not saved"
+  content="\n## [{today}] query | {question summary}\n- **输出**: inline answer, not saved"
 ```
 
 ---

@@ -35,7 +35,7 @@ user-invocable: true
 Prefer Obsidian CLI:
 
 ```
-obsidian vault="Obsidian Vault" read path="raw/01-articles/filename.md"
+obsidian vault="Vaults" read path="raw/01-articles/filename.md"
 ```
 
 Fall back to the file-read tool if the CLI fails. For PDF files: extract text content. If text extraction fails, record metadata only (title, authors, date, abstract if visible) and note the limitation in the summary page.
@@ -77,7 +77,7 @@ After the discussion, extract and classify:
 Create `wiki/sources/摘要-{slug}.md` using Obsidian CLI:
 
 ```
-obsidian vault="Obsidian Vault" create path="wiki/sources/摘要-{slug}.md" content="..."
+obsidian vault="Vaults" create path="wiki/sources/摘要-{slug}.md" content="..."
 ```
 
 Template:
@@ -121,14 +121,14 @@ For each entity and concept extracted in Step 3:
 **If the page does not exist**, create it:
 
 ```
-obsidian vault="Obsidian Vault" create path="wiki/concepts/ConceptName.md" content="..."
+obsidian vault="Vaults" create path="wiki/concepts/ConceptName.md" content="..."
 ```
 
 **If the page exists**, read it first, then merge:
 
 ```
-obsidian vault="Obsidian Vault" read path="wiki/concepts/ConceptName.md"
-obsidian vault="Obsidian Vault" append path="wiki/concepts/ConceptName.md" content="..."
+obsidian vault="Vaults" read path="wiki/concepts/ConceptName.md"
+obsidian vault="Vaults" append path="wiki/concepts/ConceptName.md" content="..."
 ```
 
 **If a conflict is detected** — immediately pause the pipeline. Do not proceed to Step 6. Go to the Conflict Resolution section below.
@@ -175,7 +175,7 @@ last_updated: YYYY-MM-DD
 If the new source meaningfully shifts the overall understanding of any topic in `wiki/synthesis.md`, append a callout using Obsidian CLI:
 
 ```
-obsidian vault="Obsidian Vault" append path="wiki/synthesis.md" content="
+obsidian vault="Vaults" append path="wiki/synthesis.md" content="
 > [!info] 新发现 — YYYY-MM-DD
 > 来源：[[摘要-{slug}]]
 > <一句话说明本次 ingest 如何改变或扩展了整体理解>
@@ -191,19 +191,19 @@ Read `wiki/index.md` first, then register all new pages created in this ingest r
 Format for concepts (include tag in backticks):
 
 ```
-- [[concepts/ConceptName]] `tag` — 一句话定义
+- [[ConceptName]] `#tag` — 一句话定义
 ```
 
 Format for entities:
 
 ```
-- [[entities/EntityName]] — 一句话描述
+- [[EntityName]] — 一句话描述
 ```
 
 Format for sources:
 
 ```
-- [[sources/摘要-{slug}]] — 该资料的核心主旨
+- [[摘要-{slug}]] — 该资料的核心主旨
 ```
 
 ### Step 8: Append to log.md
@@ -212,7 +212,7 @@ Append a single log entry:
 
 ```markdown
 ## [YYYY-MM-DD] ingest | {Source Title}
-- **变更**: 新增 [[sources/摘要-{slug}]]；新增/更新 [[ConceptName]]；更新 [[index.md]]
+- **变更**: 新增 [[摘要-{slug}]]；新增/更新 [[ConceptName]]；更新 [[index.md]]
 - **冲突**: 无（或：冲突 [[ConflictingPage]]，已标注）
 ```
 

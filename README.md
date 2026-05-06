@@ -61,6 +61,8 @@ CLAUDE.md       ← Schema 层（你和 LLM 共同演化）
 4. 用 `/query` 提问，好的回答自动沉淀为 `wiki/syntheses/` 页面
 5. 每隔几次摄入运行 `/lint` 保持知识库健康
 
+> **首次启动**：运行 `/ingest raw/05-wiki-export/` 重新摄入历史 wiki 内容。
+
 ---
 
 ## 当前知识领域
