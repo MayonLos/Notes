@@ -2,13 +2,9 @@
   "better-word-count",
   "file-explorer-note-count",
   "obsidian-git",
-  "obsidian-latex-suite",
   "obsidian-outliner",
   "recent-files-obsidian",
-  "templater-obsidian",
   "obsidian42-brat",
   "claudian",
-  "dataview",
-  "obsidian-vimrc-support",
-  "obsidian-excalidraw-plugin"
+  "obsidian-vimrc-support"
 ]
