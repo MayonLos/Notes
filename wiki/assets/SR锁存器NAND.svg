@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 240" width="420" height="240" font-family="'Courier New', monospace" font-size="13">
+  <rect width="420" height="240" fill="#fafafa" rx="6"/>
+  <text x="210" y="22" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">SR 锁存器（NAND 门实现）</text>
+
+  <!-- === 上方 NAND 门（Gate 1）：输入 S̄d，输出 Q === -->
+  <g id="gate1" transform="translate(140, 45)">
+    <line x1="-30" y1="15" x2="0" y2="15" stroke="#222" stroke-width="1.5"/>
+    <line x1="-30" y1="35" x2="0" y2="35" stroke="#222" stroke-width="1.5"/>
+    <rect x="0" y="5" width="60" height="40" fill="white" stroke="#4a7cc7" stroke-width="2" rx="3"/>
+    <text x="30" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#4a7cc7">&amp;</text>
+    <circle cx="64" cy="25" r="5" fill="white" stroke="#4a7cc7" stroke-width="2"/>
+    <line x1="69" y1="25" x2="110" y2="25" stroke="#222" stroke-width="1.5"/>
+  </g>
+
+  <!-- === 下方 NAND 门（Gate 2）：输入 R̄d，输出 Q̄ === -->
+  <g id="gate2" transform="translate(140, 145)">
+    <line x1="-30" y1="15" x2="0" y2="15" stroke="#222" stroke-width="1.5"/>
+    <line x1="-30" y1="35" x2="0" y2="35" stroke="#222" stroke-width="1.5"/>
+    <rect x="0" y="5" width="60" height="40" fill="white" stroke="#c74a4a" stroke-width="2" rx="3"/>
+    <text x="30" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#c74a4a">&amp;</text>
+    <circle cx="64" cy="25" r="5" fill="white" stroke="#c74a4a" stroke-width="2"/>
+    <line x1="69" y1="25" x2="110" y2="25" stroke="#222" stroke-width="1.5"/>
+  </g>
+
+  <!-- === 交叉反馈连线 === -->
+  <!-- Q 输出（蓝）→ 向右延伸 → 向下 → 接入 Gate 2 下方输入 -->
+  <line x1="250" y1="70" x2="310" y2="70" stroke="#4a7cc7" stroke-width="2"/>
+  <line x1="310" y1="70" x2="310" y2="180" stroke="#4a7cc7" stroke-width="2"/>
+  <line x1="310" y1="180" x2="250" y2="180" stroke="#4a7cc7" stroke-width="2"/>
+  <line x1="250" y1="180" x2="250" y2="165" stroke="#4a7cc7" stroke-width="0.5"/>
+  <!-- 接回 Gate 2 下方输入线段 -->
+  <line x1="250" y1="165" x2="310" y2="165" stroke="#4a7cc7" stroke-width="0.5" stroke-dasharray="0"/>
+  <!-- 实际上要接到Gate2的下方输入 -->
+  <line x1="250" y1="165" x2="140" y2="165" stroke="#4a7cc7" stroke-width="2"/>
+
+  <!-- Q̄ 输出（红）→ 向右延伸 → 向上 → 接入 Gate 1 下方输入 -->
+  <line x1="250" y1="170" x2="320" y2="170" stroke="#c74a4a" stroke-width="2"/>
+  <line x1="320" y1="170" x2="320" y2="80" stroke="#c74a4a" stroke-width="2"/>
+  <line x1="320" y1="80" x2="140" y2="80" stroke="#c74a4a" stroke-width="2"/>
+
+  <!-- 节点圆点 -->
+  <circle cx="250" cy="70" r="4" fill="#4a7cc7"/>
+  <circle cx="250" cy="170" r="4" fill="#c74a4a"/>
+
+  <!-- === 输入标签 === -->
+  <text x="90" y="64" font-size="13" font-weight="bold" fill="#222">S̄d</text>
+  <text x="72" y="78" font-size="10" fill="#777">（置位）</text>
+  <text x="90" y="164" font-size="13" font-weight="bold" fill="#222">R̄d</text>
+  <text x="72" y="178" font-size="10" fill="#777">（复位）</text>
+
+  <!-- === 输出标签 === -->
+  <text x="256" y="66" font-size="14" font-weight="bold" fill="#4a7cc7">Q</text>
+  <text x="256" y="166" font-size="14" font-weight="bold" fill="#c74a4a">Q̄</text>
+
+  <!-- === 约束提示 === -->
+  <rect x="10" y="210" width="400" height="24" fill="#fff8e1" rx="4" stroke="#e0c060" stroke-width="1"/>
+  <text x="210" y="226" text-anchor="middle" font-size="11" fill="#7a5c00">约束：Sd · Rd = 0（禁止同时置位+复位）  |  Q⁺ = Sd + R̄d · Q</text>
+</svg>
