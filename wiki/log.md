@@ -3,6 +3,20 @@
 > Append-only。每条以 `## [YYYY-MM-DD] type | title` 开头，支持 grep：
 > `grep "^## \[" wiki/log.md | tail -5`
 
+## [2026-05-12] restructure | 全局 wiki 重构（图片补全 + 内容深化）
+- **变更**：
+  - 删除重复文件 `wiki/concepts/TTL-vs-CMOS.md`，合并两版本最佳内容到 `wiki/comparisons/TTL-vs-CMOS.md`
+  - 修复 `逻辑函数化简.md` 的 `#![[kmap_4var_dc.svg]]` bug（`#` 前缀导致图片不渲染）
+  - 将 9 张已生成但未引用的图片嵌入 `组合逻辑电路.md` 正确章节：`mux_8to1`、`demux_1to4`、`encoder_8to3`、`decoder_3to8`、`seven_segment`、`comparator_1bit`、`comparator_multibit`、`multi_bit_adder`、`hazard_timing`
+  - 新生成 5 张配图（Google Imagen 4）：`nand_nand_circuit.png`、`control_block_diagram.png`、`srff_waveform.png`、`jkff_waveform.png`、`ttl_vtc_curve.png`
+  - 替换所有 Mermaid 代码块为真实图片引用（`逻辑代数.md`、`方框图.md`）
+  - 替换 ASCII 波形图为真实图片引用（`锁存器和触发器.md`、`逻辑门电路.md`）
+  - 统一全库 YAML tags 至 schema（`digital`/`math`/`control`/`cpp`），移除冗余 `concept` tag
+  - 统一所有 wikilinks 为简单 `[[文件名]]` 格式（移除 `concepts/digital/` 等路径前缀）
+  - 补全 `原码反码补码.md` 缺失的 sources 字段；新增"快速转换"章节
+  - 完善 `逻辑函数化简.md` 例题3分析（明确 $B\bar{C}$ 分组的合法性论证）
+  - 更新所有文件 `last_updated` 为 2026-05-12
+- **冲突**：无
 - [2026-05-12] [illust] wiki/concepts/Laplace变换.md → assets/illust/Laplace变换.png (provider: google, model: imagen-4.0-generate-001)
 
 ## [2026-05-12] ingest | 锁存器与触发器.pdf

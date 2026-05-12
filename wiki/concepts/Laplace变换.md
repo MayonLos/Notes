@@ -1,24 +1,23 @@
-﻿---
+---
 title: "Laplace变换"
 type: concept
 tags:
-  - concept
-  - 数学
-  - 控制理论
+  - math
+  - control
 aliases:
   - 拉普拉斯变换
   - Laplace Transform
   - 复频域分析
 sources: []
-last_updated: 2026-04-27
+last_updated: 2026-05-12
 ---
 
 > **一句话定义**：将时域函数转化为复频域的积分变换，把微分方程变成代数方程，是控制系统分析的数学基础。
 
 > [!tip] 学习路径
-> **前置**：[[concepts/math/算子|算子]]（理解"把运算本身当符号操作"的思维）
+> **前置**：[[算子]]（理解"把运算本身当符号操作"的思维）
 > **本页**：Laplace 变换——将微积分算子代数化的核心工具
-> **后续**：→ [[concepts/control/物理建模|物理建模]]（用 Laplace 建立传递函数）→ [[concepts/control/方框图|方框图]]（传递函数的图形化组合）
+> **后续**：→ [[物理建模]]（用 Laplace 建立传递函数）→ [[方框图]]（传递函数的图形化组合）
 
 ## 定义
 
@@ -104,9 +103,9 @@ $$\mathcal{L}\{f(t) * g(t)\} = \int_0^\infty \left[\int_0^t f(\tau)g(t-\tau)\,d\
 
 $$= \int_0^\infty f(\tau) \left[\int_\tau^\infty g(t-\tau)e^{-st}\,dt\right] d\tau = \int_0^\infty f(\tau)e^{-s\tau} \left[\int_0^\infty g(u)e^{-su}\,du\right] d\tau = F(s) \cdot G(s)$$
 
-### 🔑 统一原理：算子视角
+### 统一原理：算子视角
 
-从 [[concepts/math/算子|算子]] 的视角看，Laplace 变换的核心价值是**它将时域的微积分算子转化为复频域的代数运算**：
+从 [[算子]] 的视角看，Laplace 变换的核心价值是**它将时域的微积分算子转化为复频域的代数运算**：
 
 $$
 \frac{d}{dt} \xrightarrow{\mathcal{L}} s \qquad\qquad \int_0^t \xrightarrow{\mathcal{L}} \frac{1}{s}
@@ -133,7 +132,7 @@ $$
 
 ## 关联连接
 
-- [[concepts/math/算子|算子]] — 算子概念：Laplace 变换将微积分算子转化为代数运算
-- [[concepts/control/物理建模|控制系统-物理建模]] — 物理系统建模需要拉普拉斯变换求传递函数
-- [[concepts/control/方框图|控制系统-方框图]] — 框图化简中广泛使用拉普拉斯变换
-- [[syntheses/算子本质|算子本质（综合论述）]] — 算子视角下 Laplace 变换的深层意义
+- [[算子]] — 算子概念：Laplace 变换将微积分算子转化为代数运算
+- [[物理建模]] — 物理系统建模需要拉普拉斯变换求传递函数
+- [[方框图]] — 框图化简中广泛使用拉普拉斯变换
+- [[算子本质]] — 算子视角下 Laplace 变换的深层意义
