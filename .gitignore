@@ -23,6 +23,9 @@ desktop.ini
 gemini-scribe/
 .claudian/
 
+# API Keys
+.env
+
 # Common editor folders
 .vscode/
 .idea/

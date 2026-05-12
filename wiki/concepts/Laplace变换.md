@@ -88,6 +88,8 @@ $$\mathcal{L}\{f_1(t) * f_2(t)\} = F_1(s) \cdot F_2(s)$$
 
 实际应用中常用**部分分式展开法**：将 $F(s) = \dfrac{B(s)}{A(s)}$ 分解为 $\sum_i \dfrac{k_i}{s - p_i}$，再逐项查变换对表。
 
+![[assets/illust/Laplace变换.png]]
+
 ## 关联连接
 
 - [[算子]] — 算子概念：Laplace 变换将微积分算子转化为代数运算
