@@ -3,6 +3,8 @@
 > Append-only。每条以 `## [YYYY-MM-DD] type | title` 开头，支持 grep：
 > `grep "^## \[" wiki/log.md | tail -5`
 
+- [2026-05-12] [illust] wiki/concepts/Laplace变换.md → assets/illust/Laplace变换.png (provider: google, model: imagen-4.0-generate-001)
+
 ---
 
 ## [2026-05-07] ingest | 全量资料重摄入（4 源 + 25 wiki 导出）
