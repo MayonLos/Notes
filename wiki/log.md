@@ -5,6 +5,10 @@
 
 - [2026-05-12] [illust] wiki/concepts/Laplace变换.md → assets/illust/Laplace变换.png (provider: google, model: imagen-4.0-generate-001)
 
+## [2026-05-12] ingest | 锁存器与触发器.pdf
+- **变更**: 新增 [[摘要-锁存器与触发器]]；大幅扩充 [[锁存器和触发器]]（维持-阻塞原理/波形图/一次采用现象/异步置复位/触发器互转）；更新 [[index.md]]
+- **冲突**: "一次翻转限制"与"一次采用现象"术语差异，已在页面中统一解释两者关系，无静默覆盖
+
 ---
 
 ## [2026-05-07] ingest | 全量资料重摄入（4 源 + 25 wiki 导出）

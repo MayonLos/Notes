@@ -61,6 +61,7 @@ last_updated: 2026-05-07
 - [[摘要-deepseek-api]] — DeepSeek API 双兼容策略与 Anthropic 兼容层能力缺口
 - [[摘要-thorough-pytorch]] — DataWhale《深入浅出PyTorch》三阶段教程结构
 - [[摘要-数字电路课堂笔记]] — 江苏大学数字电子技术课程手写笔记（52张，2026-03~04）
+- [[摘要-锁存器与触发器]] — 维持-阻塞D触发器原理及锁存器→触发器进化链手写笔记
 
 ---
 
