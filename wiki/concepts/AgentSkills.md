@@ -5,15 +5,15 @@ tags:
   - concept
   - ai-tools
   - agent
-  - meta
+  - programming
 aliases:
   - Agent Skills
   - Claude Skills
   - SKILL.md
 sources:
-  - raw/01-articles/Agent Skills (Claude Skills) 详细攻略，一期视频精通_哔哩哔哩_bilibili.md
+  - wiki/sources/摘要-agent-skills-spec.md
   - https://agentskills.io/specification
-last_updated: 2026-05-07
+last_updated: 2026-04-27
 ---
 
 > **一句话定义**：Agent Skills 是一个开放标准，用目录结构 + Markdown 文件定义 AI Agent 的行为指南，通过渐进式加载机制让 Agent 在节省上下文的同时获取所需知识。
@@ -78,25 +78,11 @@ allowed-tools:                # 可选（实验性）：预批准工具列表
 
 推荐将 `SKILL.md` 控制在 500 行以内，详细资料移到 `references/` 中。
 
-## 已知局限性
-
-> [!warning] description 字段的双重职责冲突
-> `description` 字段同时承担两件互相矛盾的事：
-> - **功能说明**（给人看）：需要清晰宽泛地描述 skill 能做什么
-> - **激活条件**（给 LLM 路由）：需要精确排他地说明何时触发
->
-> 用同一个字段做这两件事，必然在精确性上妥协——功能描述越清晰，越容易被语义相近但意图不同的请求误触发。
-
-> [!info] 假阳性触发与沉没成本效应
-> 由于路由是**语义匹配**而非精确规则，用户在执行某一任务时可能意外触发不相关的 skill（false positive）。
-> 一旦触发，skill 即产生 token 消耗，中断感觉"浪费"，用户倾向于跟着走完——这种**沉没成本效应**使 false positive 的实际影响被低估。
-> 这是渐进式加载架构的一个内生性摩擦点，目前没有内置的消歧机制。
-
 ## 与其他概念的关系
 
-- [[渐进式加载]] — Agent Skills 的核心设计模式，决定了三层加载架构
-- MCP — 互补关系，Skills 提供流程知识，MCP 提供工具能力
-- [[agentskills-io]] — 开放标准本身，及生态概览
+- [[concepts/programming/渐进式加载]] — Agent Skills 的核心设计模式，决定了三层加载架构
+- MCP（待补充） — 互补关系，Skills 提供流程知识，MCP 提供工具能力
+- [[entities/agentskills-io]] — 开放标准本身，及生态概览
 
 ## 实例 / 应用
 
@@ -106,12 +92,14 @@ allowed-tools:                # 可选（实验性）：预批准工具列表
 
 ```
 .claude/skills/
-├── ingest/          # 资料摄入流程
-├── query/           # 知识库查询
-├── lint/            # 健康检查
+├── wiki-ingest/     # 资料摄入流程
+├── wiki-query/      # 知识库查询
+├── wiki-lint/       # 健康检查
 ├── obsidian-cli/    # Obsidian 操作
 └── obsidian-markdown/  # Markdown 规范
 ```
+
+每次执行 `/ingest` 命令时，Agent 通过渐进式加载激活 `wiki-ingest` skill 的完整指令来执行摄入流水线。
 
 ### 其他已知应用
 
@@ -122,6 +110,6 @@ allowed-tools:                # 可选（实验性）：预批准工具列表
 
 ## 关联连接
 
-- [[摘要-agent-skills-spec]] — 来源：规范摘要
-- [[渐进式加载]] — 核心设计模式
-- [[agentskills-io]] — 标准实体与生态
+- [[sources/摘要-agent-skills-spec]] — 来源：规范摘要
+- [[concepts/programming/渐进式加载]] — 核心设计模式
+- [[entities/agentskills-io]] — 标准实体与生态
