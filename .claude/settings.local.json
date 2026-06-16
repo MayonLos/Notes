@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git check-ignore *)",
+      "Edit(/.claude/skills/wiki-ingest/**)",
+      "Edit(/.claude/skills/wiki-query/**)",
+      "Edit(/.claude/skills/wiki-lint/**)",
+      "Bash(git -C /home/mayon/Vaults log --oneline -3)",
+      "Bash(obsidian vault *)",
+      "Bash(obsidian --list-vaults)",
+      "Read(//home/mayon/.config/**)",
+      "Bash(python3 -c ' *)",
+      "Edit(/.claude/skills/ingest/**)",
+      "Edit(/.claude/skills/query/**)",
+      "Edit(/.claude/skills/lint/**)",
+      "Bash(uv run *)"
+    ]
+  }
+}
