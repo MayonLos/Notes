@@ -3,6 +3,13 @@
 > Append-only。每条以 `## [YYYY-MM-DD] type | title` 开头，支持 grep：
 > `grep "^## \[" wiki/log.md | tail -5`
 
+## [2026-06-22] create | 自动控制原理（学习中枢）
+
+- 新建 `wiki/concepts/自动控制原理.md`：自控课程知识路线中枢页
+- 涵盖六大板块：数学基础、建模、时域分析、根轨迹、频域分析、校正设计
+- 与已有页面互联：[[Laplace变换]]、[[算子]]、[[物理建模]]、[[方框图]]
+- 更新 `wiki/index.md`，在「数学 / 控制理论」章节添加入口
+
 ## [2026-05-12] restructure | 全局 wiki 重构（图片补全 + 内容深化）
 - **变更**：
   - 删除重复文件 `wiki/concepts/TTL-vs-CMOS.md`，合并两版本最佳内容到 `wiki/comparisons/TTL-vs-CMOS.md`
