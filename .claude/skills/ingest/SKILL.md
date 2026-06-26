@@ -17,8 +17,9 @@ user-invocable: true
 | 旧版 wiki 导出 | `raw/05-wiki-export/` |
 | 已归档（禁止读取） | `raw/09-archive/` |
 | 资料摘要页 | `wiki/sources/` |
-| 实体页 | `wiki/entities/` |
-| 概念页 | `wiki/concepts/` |
+| 概念页（自控/数学）| `wiki/concepts/control/` |
+| 概念页（数字电路）| `wiki/concepts/digital/` |
+| 概念页（C++）| `wiki/concepts/cpp/` |
 | 全局索引 | `wiki/index.md` |
 | 操作日志 | `wiki/log.md` |
 
@@ -49,8 +50,8 @@ Extract 3–5 key insights from the source. Then open a Socratic dialogue with t
 - **Rigorous language**: Carefully distinguish between 定义（definition）、定理（theorem）、推论（corollary）、猜想（conjecture）. Do not present speculation as established fact.
 - **Cross-domain connections**: Actively look for links across the wiki's knowledge domains. Examples of productive entry points:
   - Digital circuit encoding ↔ C++ integer representation (two's complement, overflow behavior)
-  - Control system optimization ↔ AI gradient descent (convergence conditions, stability criteria)
-  - Laplace transforms ↔ frequency-domain reasoning in ML (signal processing foundations)
+  - Control system transfer functions ↔ Laplace transform algebraic rules
+  - Physical modeling ↔ block diagram simplification (same system, different representation)
   Use these connections as entry points for questions, not as assertions.
 - **One question at a time**: Do not overwhelm. Ask one focused question, wait for the response, then proceed.
 
@@ -68,7 +69,9 @@ After the discussion, extract and classify:
 - **实体**（→ `wiki/entities/`）: named people, organizations, tools, products, events.
 - **概念**（→ `wiki/concepts/`）: frameworks, methods, theories, algorithms.
 
-**Tag assignment**: tags use a flat structure. Do not create subdirectory-based tags. Check the Tags table in `CLAUDE.md` for existing tags. If no existing tag fits the new content, create a new tag and add it to the Tags table in `CLAUDE.md` before proceeding.
+**Tag assignment**: Check the Tags table in `CLAUDE.md` for existing tags. If no existing tag fits the new content, create a new tag and add it to the Tags table in `CLAUDE.md` before proceeding.
+
+**Subfolder selection**: Determine the concept's domain subfolder from its primary tag — `#control` or `#math` → `wiki/concepts/control/`; `#digital` → `wiki/concepts/digital/`; `#cpp` → `wiki/concepts/cpp/`.
 
 **Non-Chinese content**: translate key terms to Chinese, keeping the English original as an `aliases` entry in the frontmatter.
 
@@ -118,17 +121,18 @@ last_updated: YYYY-MM-DD
 
 For each entity and concept extracted in Step 3:
 
-**If the page does not exist**, create it:
+**If the page does not exist**, create it in the appropriate subfolder (determined by tag in Step 3):
 
 ```
-obsidian vault="Vaults" create path="wiki/concepts/ConceptName.md" content="..."
+obsidian vault="Vaults" create path="wiki/concepts/{domain}/ConceptName.md" content="..."
+# domain = control | digital | cpp
 ```
 
 **If the page exists**, read it first, then merge:
 
 ```
-obsidian vault="Vaults" read path="wiki/concepts/ConceptName.md"
-obsidian vault="Vaults" append path="wiki/concepts/ConceptName.md" content="..."
+obsidian vault="Vaults" read path="wiki/concepts/{domain}/ConceptName.md"
+obsidian vault="Vaults" append path="wiki/concepts/{domain}/ConceptName.md" content="..."
 ```
 
 **If a conflict is detected** — immediately pause the pipeline. Do not proceed to Step 6. Go to the Conflict Resolution section below.

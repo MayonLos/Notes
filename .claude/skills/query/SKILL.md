@@ -12,8 +12,9 @@ user-invocable: true
 |:-----|:-----|
 | Global index (always start here) | `wiki/index.md` |
 | Operation log | `wiki/log.md` |
-| Concept pages | `wiki/concepts/` |
-| Entity pages | `wiki/entities/` |
+| Concept pages (自控/数学) | `wiki/concepts/control/` |
+| Concept pages (数字电路) | `wiki/concepts/digital/` |
+| Concept pages (C++) | `wiki/concepts/cpp/` |
 | Source summaries | `wiki/sources/` |
 | Comparisons | `wiki/comparisons/` |
 | Syntheses | `wiki/syntheses/` |

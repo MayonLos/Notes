@@ -1,4 +1,4 @@
-# LLM Wiki — Schema
+# 个人学习 Wiki — Schema
 
 > **Vault 根目录**：`/home/mayon/Vaults/`
 
@@ -7,7 +7,7 @@
 ## 角色与语言
 
 - **语言**：无论输入何种语言，始终使用**简体中文**思考、回复、编写 wiki。
-- **角色**：你正在维护一个 **LLM Wiki**（基于 [Karpathy 的规范](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)）。你的任务是将碎片化信息编译成结构化、高度互联的 Obsidian 知识库。
+- **角色**：你正在维护一个**个人学习知识库**，涵盖自动控制原理、数字电路、C++ 等课程。你的任务是将碎片化信息编译成结构化、高度互联的 Obsidian 知识库。
 - **协作模式**：用户负责来源筛选与方向引导；你负责所有簿记——摘要、交叉引用、归档、维护。
 
 ---
@@ -26,8 +26,10 @@ raw/                    # 不可变资料层（只读）
   09-archive/           # 已处理文件（禁止读取）
 
 wiki/                   # 编译知识层（LLM 完全拥有）
-  concepts/             # 概念页（扁平——用 tags 区分领域）
-  entities/             # 实体页（人物、工具、公司、产品、事件）
+  concepts/             # 概念页（按学科分子文件夹）
+    control/            # 自动控制原理
+    digital/            # 数字电路
+    cpp/                # C++
   sources/              # 资料摘要页（从 raw/ 提炼）
   comparisons/          # 对比分析页
   syntheses/            # 综合论述页（高价值查询沉淀）
@@ -84,15 +86,14 @@ last_updated: YYYY-MM-DD
 
 现有 tags 不够用时，自行创建新 tag 并**追加到此列表**：
 
-| Tag | 覆盖领域 |
-|:----|:---------|
-| `#cpp` | C++ 编程语言 |
-| `#math` | 数学工具（Laplace、算子等）|
-| `#control` | 控制理论 |
-| `#digital` | 数字电路与逻辑 |
-| `#embedded` | 嵌入式开发（STM32、ROS）|
-| `#ai` | 人工智能、机器学习、深度学习 |
-| `#meta` | 方法论、工具、编程范式 |
+| Tag | 覆盖领域 | 对应子文件夹 |
+|:----|:---------|:------------|
+| `#control` | 自动控制原理 | `concepts/control/` |
+| `#math` | 数学工具（Laplace、算子等）| `concepts/control/` |
+| `#digital` | 数字电路与逻辑 | `concepts/digital/` |
+| `#cpp` | C++ 编程语言 | `concepts/cpp/` |
+| `#embedded` | 嵌入式开发（STM32、ROS）| `concepts/cpp/`（待定）|
+| `#meta` | 方法论、工具、编程范式 | 视情况 |
 
 ### Wikilinks 与交叉引用
 
@@ -113,15 +114,18 @@ last_updated: YYYY-MM-DD
 
 ### 命名约定
 
-| 页面类型 | 命名规则 | 示例 |
-|:---------|:---------|:-----|
-| 资料摘要 | `摘要-{slug}.md`（kebab-case）| `摘要-attention-is-all-you-need.md` |
-| 实体 | `EntityName.md`（TitleCase）| `AndrejKarpathy.md` |
-| 概念 | `ConceptName.md`（中文或 TitleCase）| `Transformer架构.md` |
-| 对比 | `{A}-vs-{B}.md` | `RAG-vs-LLM-Wiki.md` |
-| 综合 | 主题描述 slug | `LLM-Wiki模式综合.md` |
+| 页面类型 | 路径 | 命名规则 | 示例 |
+|:---------|:-----|:---------|:-----|
+| 概念（自控）| `wiki/concepts/control/` | 中文或 TitleCase | `二阶系统.md` |
+| 概念（数电）| `wiki/concepts/digital/` | 中文或 TitleCase | `组合逻辑电路.md` |
+| 概念（C++）| `wiki/concepts/cpp/` | 中文或 TitleCase | `内存管理.md` |
+| 资料摘要 | `wiki/sources/` | `摘要-{slug}.md` | `摘要-ogata-modern-control.md` |
+| 对比 | `wiki/comparisons/` | `{A}-vs-{B}.md` | `PID-vs-超前校正.md` |
+| 综合 | `wiki/syntheses/` | 主题描述 slug | `频域分析综合.md` |
 
 优先中文命名；英文名/缩写作为 `aliases` 写入 frontmatter。
+
+**概念子文件夹选择规则**：根据页面的主 tag 确定放置位置——`#control`/`#math` → `control/`，`#digital` → `digital/`，`#cpp` → `cpp/`。
 
 ### 矛盾处理原则
 
