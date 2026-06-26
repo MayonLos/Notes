@@ -3,6 +3,18 @@
 > Append-only。每条以 `## [YYYY-MM-DD] type | title` 开头，支持 grep：
 > `grep "^## \[" wiki/log.md | tail -5`
 
+## [2026-06-26] restructure | Wiki 重组 + 清理
+
+- **删除死链**：index.md 删除 AI/LLM 整节、实体整节、对比整节（文件已入回收站）
+- **修复破损引用**：移除 `Laplace变换`、`物理建模` 学习路径 tip 中的 `[[方框图]]`（文件已删）
+- **解决重复**：删除 `concepts/算子本质.md`（旧版），保留 `syntheses/算子本质.md`（新版）
+- **概念子文件夹**：`wiki/concepts/` 拆分为三个学科子文件夹
+  - `control/`：Laplace变换、物理建模、算子、自动控制原理（4个）
+  - `digital/`：计数制与编码、逻辑代数、逻辑函数化简、逻辑门电路、组合逻辑电路、锁存器和触发器、原码反码补码（7个）
+  - `cpp/`：基础语法、面向对象、标准模板库、内存管理（4个）
+- **CLAUDE.md**：标题/角色说明更新，架构图更新，Tags 表添加子文件夹列，命名约定更新
+- **Skill 更新**：ingest/query/lint 三个 SKILL.md 均已同步路径变更
+
 ## [2026-06-22] delete | 数电原始图片删除 + sources 更新
 
 - 删除 `raw/09-archive/2026-05-05-数字电路课堂笔记/`（52 张 JPG，已处理完毕）

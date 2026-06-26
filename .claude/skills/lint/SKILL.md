@@ -12,7 +12,10 @@ user-invocable: true
 |:-----|:-----|
 | Global index | `wiki/index.md` |
 | Operation log | `wiki/log.md` |
-| All wiki pages | `wiki/` |
+| 自控概念 | `wiki/concepts/control/` |
+| 数电概念 | `wiki/concepts/digital/` |
+| C++ 概念 | `wiki/concepts/cpp/` |
+| All wiki pages | `wiki/` (scan recursively) |
 | Raw inbox | `raw/` (excluding `09-archive/`) |
 
 ---

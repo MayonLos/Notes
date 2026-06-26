@@ -60,7 +60,13 @@ Identify all relevant concepts, entities, sources, and synthesis pages from the 
 ### Step 2: Deep-Read Target Pages
 
 ```bash
-obsidian vault="Vaults" read path="wiki/concepts/ConceptName.md"
+# 自控/数学概念
+obsidian vault="Vaults" read path="wiki/concepts/control/ConceptName.md"
+# 数电概念
+obsidian vault="Vaults" read path="wiki/concepts/digital/ConceptName.md"
+# C++ 概念
+obsidian vault="Vaults" read path="wiki/concepts/cpp/ConceptName.md"
+# 资料摘要
 obsidian vault="Vaults" read path="wiki/sources/摘要-slug.md"
 ```
 
