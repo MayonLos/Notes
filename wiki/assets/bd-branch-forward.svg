@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 210" width="680" height="210" font-family="'Times New Roman', serif" font-size="14">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#222"/>
+    </marker>
+  </defs>
+
+  <!-- ===== 左图：原图（分支点在后）===== -->
+  <text x="130" y="18" text-anchor="middle" font-size="12" fill="#555">原图</text>
+
+  <!-- 方框 G -->
+  <rect x="50" y="70" width="60" height="36" fill="white" stroke="#222" stroke-width="1.5" rx="2"/>
+  <text x="80" y="93" text-anchor="middle" font-style="italic">G</text>
+
+  <!-- R → G -->
+  <line x1="18" y1="88" x2="48" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="8" y="92" text-anchor="middle" font-style="italic" font-size="13">R</text>
+
+  <!-- G → 分支点 -->
+  <line x1="110" y1="88" x2="175" y2="88" stroke="#222" stroke-width="1.5"/>
+  <!-- 分支点圆点 -->
+  <circle cx="175" cy="88" r="4" fill="#222"/>
+
+  <!-- 分支点 → C（主输出）-->
+  <line x1="175" y1="88" x2="240" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="250" y="92" font-style="italic" font-size="13">C</text>
+
+  <!-- 分支点 → B（向下，支路输出）-->
+  <line x1="175" y1="88" x2="175" y2="155" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="175" y="172" text-anchor="middle" font-style="italic" font-size="13">B</text>
+
+  <!-- ===== 分隔线 ===== -->
+  <line x1="300" y1="20" x2="300" y2="185" stroke="#bbb" stroke-width="1" stroke-dasharray="5,4"/>
+  <text x="300" y="108" text-anchor="middle" font-size="22" fill="#888">⟹</text>
+
+  <!-- ===== 右图：等效图（分支点前移）===== -->
+  <text x="510" y="18" text-anchor="middle" font-size="12" fill="#555">等效图（分支点前移）</text>
+
+  <!-- 分支点 -->
+  <circle cx="360" cy="88" r="4" fill="#222"/>
+
+  <!-- 方框 G（主路）-->
+  <rect x="390" y="70" width="60" height="36" fill="white" stroke="#222" stroke-width="1.5" rx="2"/>
+  <text x="420" y="93" text-anchor="middle" font-style="italic">G</text>
+
+  <!-- 方框 G（支路）-->
+  <rect x="390" y="130" width="60" height="36" fill="white" stroke="#222" stroke-width="1.5" rx="2"/>
+  <text x="420" y="153" text-anchor="middle" font-style="italic">G</text>
+
+  <!-- R → 分支点 -->
+  <line x1="328" y1="88" x2="356" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="318" y="92" text-anchor="middle" font-style="italic" font-size="13">R</text>
+
+  <!-- 分支点 → G主 -->
+  <line x1="364" y1="88" x2="388" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- 分支点 → G支 (向下) -->
+  <line x1="360" y1="92" x2="360" y2="148" stroke="#222" stroke-width="1.5"/>
+  <line x1="360" y1="148" x2="388" y2="148" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- G主 → C -->
+  <line x1="450" y1="88" x2="495" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="505" y="92" font-style="italic" font-size="13">C</text>
+
+  <!-- G支 → B -->
+  <line x1="450" y1="148" x2="495" y2="148" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="505" y="152" font-style="italic" font-size="13">B</text>
+</svg>

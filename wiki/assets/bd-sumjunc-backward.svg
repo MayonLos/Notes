@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 200" width="680" height="200" font-family="'Times New Roman', serif" font-size="14">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#222"/>
+    </marker>
+  </defs>
+
+  <!-- ===== 左图：原图（相加点在前）===== -->
+  <text x="130" y="18" text-anchor="middle" font-size="12" fill="#555">原图</text>
+
+  <!-- 相加点 -->
+  <circle cx="80" cy="88" r="14" fill="white" stroke="#222" stroke-width="1.5"/>
+  <text x="80" y="85" text-anchor="middle" font-size="13">+</text>
+  <text x="80" y="100" text-anchor="middle" font-size="13">+</text>
+
+  <!-- 方框 G -->
+  <rect x="140" y="70" width="60" height="36" fill="white" stroke="#222" stroke-width="1.5" rx="2"/>
+  <text x="170" y="93" text-anchor="middle" font-style="italic">G</text>
+
+  <!-- R → 相加点 -->
+  <line x1="22" y1="88" x2="64" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="12" y="92" text-anchor="middle" font-style="italic" font-size="13">R</text>
+
+  <!-- D ↓ → 相加点 -->
+  <line x1="80" y1="38" x2="80" y2="72" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="80" y="31" text-anchor="middle" font-style="italic" font-size="13">D</text>
+
+  <!-- 相加点 → G -->
+  <line x1="94" y1="88" x2="138" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- G → C -->
+  <line x1="200" y1="88" x2="242" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="253" y="92" font-style="italic" font-size="13">C</text>
+
+  <!-- ===== 分隔线 ===== -->
+  <line x1="300" y1="20" x2="300" y2="180" stroke="#bbb" stroke-width="1" stroke-dasharray="5,4"/>
+  <text x="300" y="105" text-anchor="middle" font-size="22" fill="#888">⟹</text>
+
+  <!-- ===== 右图：等效图（相加点后移）===== -->
+  <text x="510" y="18" text-anchor="middle" font-size="12" fill="#555">等效图（相加点后移）</text>
+
+  <!-- 方框 G（主路）-->
+  <rect x="350" y="70" width="60" height="36" fill="white" stroke="#222" stroke-width="1.5" rx="2"/>
+  <text x="380" y="93" text-anchor="middle" font-style="italic">G</text>
+
+  <!-- 方框 G（D 路，并联）-->
+  <rect x="490" y="118" width="60" height="36" fill="white" stroke="#222" stroke-width="1.5" rx="2"/>
+  <text x="520" y="141" text-anchor="middle" font-style="italic">G</text>
+
+  <!-- 相加点 -->
+  <circle cx="590" cy="88" r="14" fill="white" stroke="#222" stroke-width="1.5"/>
+  <text x="590" y="85" text-anchor="middle" font-size="13">+</text>
+  <text x="590" y="100" text-anchor="middle" font-size="13">+</text>
+
+  <!-- R → G -->
+  <line x1="320" y1="88" x2="348" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="310" y="92" text-anchor="middle" font-style="italic" font-size="13">R</text>
+
+  <!-- G → 相加点 -->
+  <line x1="410" y1="88" x2="574" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- D 向下 → G(D路) -->
+  <line x1="520" y1="38" x2="520" y2="116" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="520" y="31" text-anchor="middle" font-style="italic" font-size="13">D</text>
+
+  <!-- G(D路) → 相加点 -->
+  <line x1="550" y1="136" x2="588" y2="102" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- 相加点 → C -->
+  <line x1="604" y1="88" x2="645" y2="88" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="655" y="92" font-style="italic" font-size="13">C</text>
+</svg>
