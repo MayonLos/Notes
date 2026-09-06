@@ -1,193 +1,77 @@
 ---
 name: lint
-description: Global knowledge base health check. Scans wiki/ for dead links, orphan pages, unsynced index, cognitive conflicts, stale knowledge, and knowledge gaps. Triggered by /lint, /scan, /health, or "检查知识库状态/健康". Recommended after every 5-10 ingestions.
+description: 只读检查本 Vault 的 wiki 结构、frontmatter、索引一致性、wikilink、孤儿页和来源待办，输出可复核的知识库健康报告。
 user-invocable: true
 ---
 
-# lint — Knowledge Graph Health Check Skill
+# lint：知识库健康检查
 
-## Quick Reference
+## 触发
 
-| Role | Path |
-|:-----|:-----|
-| Global index | `wiki/index.md` |
-| Operation log | `wiki/log.md` |
-| 自控概念 | `wiki/concepts/control/` |
-| 数电概念 | `wiki/concepts/digital/` |
-| C++ 概念 | `wiki/concepts/cpp/` |
-| All wiki pages | `wiki/` (scan recursively) |
-| Raw inbox | `raw/` (excluding `09-archive/`) |
+- `/lint`、`/scan`、`/health`。
+- “检查知识库状态/死链/孤儿页/整理风险”等请求。
 
----
+## 硬边界
 
-## Trigger Conditions
+- 这是只读审计：不得自动修复、移动、删除或改写任何文件。
+- 只检查 `/home/mayon/Vaults/wiki/`，可统计 `raw/01-articles/` 至 `raw/05-wiki-export/` 的待办数量；绝不读取 `raw/09-archive/`。
+- 不触碰 `.git/`、`.obsidian/`、`.claude/`、`.claudian/`、`.smart-env/`、`.env`、`.team/`、`.trash/`。
+- 输出问题的绝对路径、等级、证据和建议；修复必须另获用户确认，并交由对应流程执行。
 
-- User types `/lint`, `/scan`, `/health`
-- User asks "知识库健康状况如何"、"检查一下知识库"
-- **Recommended**: after every 5-10 ingestions
+## 检查项目
 
----
+1. **入口与结构**：`wiki/index.md`、`wiki/log.md`、`wiki/synthesis.md` 是否存在；页面是否位于约定目录。
+2. **Frontmatter**：每个 wiki Markdown 是否有 YAML frontmatter、`title`、`type`、`tags`、`last_updated`；`type` 是否属于 `entity|concept|source|synthesis|comparison`。
+3. **索引一致性**：实际页面与 `index.md` 的注册项分别找出未登记页和幽灵链接。
+4. **链接健康**：解析 `[[目标]]`、`[[目标#标题]]`、`[[目标|别名]]`；报告无法解析的目标、缺失标题和图片/文件 embed。
+5. **孤儿与重复**：统计没有入链的页面；报告重复标题、重复来源或同名不同路径，避免合并猜测。
+6. **内容风险**：标出 `知识冲突`、`待验证`、`待补充`、过期 `last_updated` 和缺少 `## 关联连接` 的页面。
+7. **来源待办**：统计未归档目录中的文件数量和类型；不把数量误报为已完成摄入。
 
-## Inspection Pipeline (8 Steps)
-
-### Step 1: Read Global View
+## 便携检查命令
 
 ```bash
-obsidian vault="Vaults" read path="wiki/index.md"
-obsidian vault="Vaults" read path="wiki/log.md"
+ROOT=/home/mayon/Vaults
+
+test -f "$ROOT/wiki/index.md" && test -f "$ROOT/wiki/log.md"
+find "$ROOT/wiki" -type f -name '*.md' -print | sort
+rg -n '^\[\[|\]\]|^sources:|^last_updated:|知识冲突|待验证|待补充|## 关联连接' "$ROOT/wiki" --glob '*.md'
+find "$ROOT/raw" -path "$ROOT/raw/09-archive" -prune -o -type f -print | sort
 ```
 
-Extract all `[[page-name]]` references from index.md → build **registered pages set**.
-Extract recent ingestion dates and topics from log.md → build **ingestion timeline**.
+命令只用于取证；不要把 `rg` 的高亮或退出码直接当结论。必要时用一个临时 Python 脚本解析 frontmatter 和 wikilink，并在报告中写出脚本版本/命令。
 
----
+## 报告格式
 
-### Step 2: Scan All wiki/ Files
+```markdown
+# 知识库健康报告 — YYYY-MM-DD
 
-Enumerate all `.md` files under `wiki/` (excluding `index.md`, `log.md`, `synthesis.md`) → build **actual files set**.
+## ✅ 通过
+- 检查项：证据和命令。
 
-The LLM should use the most reliable available method on the current platform. Obsidian CLI is preferred; platform-native directory listing is an acceptable fallback. The goal is a complete, accurate list of wiki page paths.
+## ⚠️ 警告
+- [绝对路径] 问题、证据、建议；不自动修复。
 
----
+## ❌ 失败
+- [绝对路径] 可复现的死链、缺字段或结构错误。
 
-### Step 3: Index Consistency Check
+## 📥 待办
+- raw 未处理文件数量及建议。
 
-Compare the two sets:
+## 下一步
+按风险排序列出动作，并注明需要用户确认的写入操作。
+```
 
-1. **Unsynced pages**: file exists but not registered in `index.md` → ⚠️ Yellow
-2. **Ghost entries**: registered in `index.md` but file doesn't exist → ❌ Red (dead link in index)
+报告完成后再次确认：没有产生文件差异；若发现权限、运行中的 Obsidian 或解析器限制，明确标注为“未验证”，不要猜测结果。
 
----
+## 可执行只读校验
 
-### Step 4: Wikilink Health Check
-
-Extract all `[[links]]` from every wiki `.md` file:
-
-- Use Obsidian CLI backlinks for individual pages. For global wikilink extraction, use platform-native tools (e.g., `grep` on Unix, `Select-String` on Windows) to scan all `.md` files under `wiki/`.
-- Alternatively, for each page in the actual files set, run Obsidian CLI backlinks to identify inbound references.
+用标准库脚本执行结构化健康检查；脚本只读，不自动修复：
 
 ```bash
-obsidian vault="Vaults" backlinks file="PageName"
+ROOT=/home/mayon/Vaults
+python3 "$ROOT/.claude/skills/lint/scripts/check_vault.py" --root "$ROOT"
+python3 "$ROOT/.claude/skills/lint/scripts/check_vault.py" --root "$ROOT" --json
 ```
 
-1. Link target is not in the actual files set → **Dead link** ❌
-2. Page is never referenced by any other page (no inbound backlinks) → **Orphan page** ⚠️
-
----
-
-### Step 5: Cognitive Conflict Audit
-
-```bash
-obsidian vault="Vaults" search query="知识冲突" limit=50
-obsidian vault="Vaults" search query="[!warning]" limit=50
-```
-
-For each result: identify the conflicting page, the parties in conflict, and whether it has been resolved.
-
----
-
-### Step 6: Stale Knowledge Detection
-
-Find pages where `last_updated` is more than **90 days ago** AND newer sources on the same topic appear in the log:
-
-```bash
-obsidian vault="Vaults" search query="last_updated" limit=200
-```
-
-Cross-reference with the ingestion timeline from Step 1. Flag pages where the `last_updated` date predates a log entry on the same topic — these may reflect superseded knowledge.
-
----
-
-### Step 7: Knowledge Gap Scan
-
-```bash
-obsidian vault="Vaults" search query="待补充" limit=50
-obsidian vault="Vaults" search query="待验证" limit=50
-obsidian vault="Vaults" search query="[!todo]" limit=50
-```
-
----
-
-### Step 8: Inbox Backlog Check
-
-Enumerate all unarchived files under `raw/` (exclude `09-archive/` entirely). Count how many source files are waiting to be ingested.
-
-Use Obsidian CLI if available; fall back to platform-native file enumeration. The key metric is: how many files in `raw/01-04/` and `raw/05-wiki-export/` have not yet been ingested? Each file found is an item in the inbox backlog.
-
----
-
-## Report Format
-
-Generate this report after completing all 8 steps — do not modify any files before the report:
-
-```
-## 🩺 知识库健康体检报告 — YYYY-MM-DD
-
-### ✅ 绿灯项
-- [items running well, e.g. "索引与文件完全一致"]
-
-### ⚠️ 黄灯项（需关注）
-- **孤儿页面 (N 个)**：
-  - [[ConceptName]]：无入站链接 → 建议：在相关页添加关联
-- **未同步索引 (N 个)**：
-  - `wiki/concepts/ConceptName.md` → 建议：注册到 index.md
-- **知识过时 (N 个)**：
-  - [[ConceptName]]：last_updated 2025-12-01，已有 2026-03 的相关摄入 → 建议：重新摄入更新来源
-- **未处理收件箱 (N 个)**：
-  - `raw/01-articles/article.md` → 建议：运行 `/ingest`
-
-### ❌ 红灯项（立即修复）
-- **死链 (N 个)**：
-  - [[source-page]] 中 [[nonexistent-target]] → 建议：创建目标页面或修正链接
-- **未解决认知冲突 (N 个)**：
-  - [[ConflictPage]]：<description of conflict>
-
-### ⬜ 知识空白 (N 个)
-- [[ConceptPage]] 中 [!todo]：<description> → 建议：搜索关键词 "<term>"
-
-### 📥 建议摄入清单
-根据以上知识空白与过时页面，建议优先搜集：
-1. <topic 1> — 填补 [[X]] 的空白
-2. <topic 2> — 解决 [[Y]] 的过时问题
-
-### 🛠️ 下一步行动
-1. 是否自动修复未同步索引？（我可以执行）
-2. 是否针对认知冲突重新推演？
-3. 是否立即摄入收件箱积压文件？
-```
-
----
-
-## Executing Fixes (After User Confirmation)
-
-**Fix unsynced index entry**:
-
-```bash
-obsidian vault="Vaults" append \
-  path="wiki/index.md" \
-  content="\n- [[ConceptName]] \`#tag\` — one-line definition"
-```
-
-**Fix orphan page** (add cross-reference from a related page):
-
-```bash
-obsidian vault="Vaults" append \
-  path="wiki/concepts/RelatedConcept.md" \
-  content="\n- [[OrphanConcept]] — <relationship>"
-```
-
-**Log each fix**:
-
-```bash
-obsidian vault="Vaults" append \
-  path="wiki/log.md" \
-  content="\n## [{today}] lint | Fixed N issues\n- **变更**: <specific fix description>"
-```
-
----
-
-## Hard Constraints
-
-- **Read-only scan**: generate the report before modifying any files
-- **Manual confirmation**: wait for user approval before executing any fixes
-- **Never read `raw/09-archive/`**
+输出契约：默认输出 `check_vault: PASS|WARN|FAIL`、页面数、错误数、警告数和问题清单；`--json` 输出含 `tool`、`root`、`status`、`checks`、`errors`、`warnings` 的 JSON。`checks` 至少包含 `pages`、`frontmatter`、`dead_links`、`unindexed`、`orphans`、`raw_pending`。退出码 `0` 表示无错误（即使有 WARN），`1` 表示存在错误。

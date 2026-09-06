@@ -8,7 +8,7 @@
 
 - **语言**：无论输入何种语言，始终使用**简体中文**思考、回复、编写 wiki。
 - **角色**：你正在维护一个**个人学习知识库**，涵盖自动控制原理、数字电路、C++ 等课程。你的任务是将碎片化信息编译成结构化、高度互联的 Obsidian 知识库。
-- **协作模式**：用户负责来源筛选与方向引导；你负责所有簿记——摘要、交叉引用、归档、维护。
+- **协作模式**：用户负责来源筛选与方向引导；你负责所有簿记——摘要、交叉引用、维护。
 
 ---
 
@@ -32,12 +32,14 @@ wiki/                   # 编译知识层（LLM 完全拥有）
     cpp/                # C++
   sources/              # 资料摘要页（从 raw/ 提炼）
   comparisons/          # 对比分析页
-  syntheses/            # 综合论述页（高价值查询沉淀）
+  syntheses/            # 综合论述页（经明确要求保存的高价值查询沉淀）
   index.md              # 全局目录（查询首先读这里）
   log.md                # 追加式操作日志
   synthesis.md          # 整体演化主论述
 
 CLAUDE.md               # 本文件：schema 与约定
+README.md               # 知识库说明与导航入口
+TODO.md                 # 学习路线与待办事项
 .claude/skills/         # 技能定义
   ingest/               # 资料摄入
   query/                # 知识查询
@@ -58,6 +60,8 @@ CLAUDE.md               # 本文件：schema 与约定
 | `raw/09-archive/` | **禁止读取** | 已归档文件 |
 | `wiki/` | 完全读写 | 你的工作区 |
 | `CLAUDE.md` | 读写（谨慎） | 与用户共同演化 |
+| `README.md` | 读写（谨慎） | 知识库说明与导航 |
+| `TODO.md` | 读写 | 学习路线与待办 |
 
 ---
 
@@ -70,7 +74,7 @@ CLAUDE.md               # 本文件：schema 与约定
 ```yaml
 ---
 title: "页面标题"
-type: entity | concept | source | synthesis | comparison
+type: entity | concept | source | synthesis | comparison | index | meta
 tags:
   - 主领域标签
   - 次领域标签
@@ -99,7 +103,7 @@ last_updated: YYYY-MM-DD
 
 - 用 `[[页面名]]` 链接到其他 wiki 页面
 - 用 `[文字](url)` 链接外部资源
-- 每个页面**必须**包含 `## 关联连接` 区域——**绝不产生孤岛页面**
+- 每个知识页面**必须**包含 `## 关联连接` 区域——**绝不产生孤岛页面**。`wiki/index.md` 是导航中枢，`wiki/log.md` 是追加式操作日志，分别遵循各自的导航与日志格式。
 
 ### Callout 标记系统
 
@@ -136,12 +140,21 @@ last_updated: YYYY-MM-DD
 
 > **绝对不要静默覆盖。**
 
+### 知识库 Skills
+
+| Skill | 默认行为 | 写入/检查边界 |
+|:------|:---------|:--------------|
+| `ingest` | 默认一次处理一份资料；`/ingest` 仅在明确要求批量时使用 | 可写入 `wiki/`；批处理必须先列出清单并获得确认；不修改 `raw/` |
+| `query` | 只读检索并基于 Wiki 证据回答 | 不修改 Wiki；只有用户明确要求保存/沉淀时才转交摄入流程或另行确认 |
+| `lint` | 只读检查 Wiki 健康度 | 不自动修复、移动、删除或改写任何文件 |
+
 ---
 
 ## 操作速查
 
 | 指令 | 技能 | 说明 |
 |:-----|:-----|:-----|
-| `/ingest` 或 `/ingest <路径>` | `ingest` | 将 raw/ 资料编译进 wiki |
-| `/query <问题>` | `query` | 检索 wiki 并综合回答 |
-| `/lint` | `lint` | 知识库健康检查 |
+| `/ingest <路径>` | `ingest` | 默认将一份 raw/ 资料编译进 wiki |
+| `/ingest` | `ingest` | 仅在明确要求批量时使用，先列清单并获得确认 |
+| `/query <问题>` | `query` | 只读检索 wiki 并综合回答，不自动保存 |
+| `/lint` | `lint` | 只读执行知识库健康检查，不自动修复 |

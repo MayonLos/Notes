@@ -4,7 +4,11 @@
   "obsidian-git",
   "obsidian-outliner",
   "recent-files-obsidian",
-  "obsidian42-brat",
-  "claudian",
-  "obsidian-vimrc-support"
+  "obsidian-vimrc-support",
+  "realclaudian",
+  "smart-connections",
+  "smart-context",
+  "smart-chatgpt",
+  "smart-lookup",
+  "smart-templates"
 ]

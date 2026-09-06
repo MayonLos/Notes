@@ -13,7 +13,7 @@
 **关键差异**：wiki 是持久的、复利式的产出物。交叉引用已经建立好了。矛盾已经被标注了。综合论述已经反映了你读过的所有内容。每添加一份资料，知识库就更丰富一点。
 
 你的工作：筛选资料、设定方向、提出好问题。
-LLM 的工作：摘要、交叉引用、归档、维护——所有你不想做的簿记。
+LLM 的工作：摘要、交叉引用、维护——所有你不想做的簿记。
 
 ---
 
@@ -29,11 +29,11 @@ raw/            ← 不可变资料层（只读）
   09-archive/      已处理文件（归档）
 
 wiki/           ← 编译知识层（LLM 完全拥有）
-  concepts/        概念页（扁平，#tags 区分领域）
+  concepts/        概念页（按学科分子目录，#tags 区分领域）
   entities/        实体页（人物、工具、公司）
   sources/         资料摘要页
   comparisons/     对比分析页
-  syntheses/       综合论述页（高价值查询的沉淀）
+  syntheses/       综合论述页（经明确要求保存的高价值查询沉淀）
   index.md         全局目录（导航中枢）
   log.md           追加式操作日志
   synthesis.md     整体演化主论述
@@ -43,25 +43,43 @@ CLAUDE.md       ← Schema 层（你和 LLM 共同演化）
 
 ---
 
+## 文档导航
+
+- [[wiki/index|Wiki 索引]] — 知识页面、资料摘要与综合论述的入口
+- [[wiki/synthesis|整体综合论述]] — 知识库的跨领域演化总结
+- [[wiki/log|操作日志]] — Wiki 维护操作的追加式记录
+- [[TODO|学习路线 & 待办]] — 学习主题与待办事项
+- [[CLAUDE|Schema 与维护约定]] — 页面规范、目录约定与操作规则
+
+---
+
 ## 快速上手
 
 在 Claude Code 中打开此 Vault 目录，然后使用以下指令：
 
 | 操作 | 指令 | 说明 |
 |:-----|:-----|:-----|
-| 摄入新资料 | `/ingest` | 扫描并处理所有 raw/ 中的待处理文件 |
-| 摄入指定文件 | `/ingest raw/01-articles/filename.md` | 处理单个文件 |
-| 查询知识库 | `/query 什么是 RAII？` | 检索并综合回答 |
-| 健康检查 | `/lint` | 检测死链、孤儿页、知识冲突等 |
+| 摄入单份资料 | `/ingest raw/01-articles/filename.md` | 默认一次处理一份资料 |
+| 批量摄入资料 | `/ingest` | 仅在明确要求批量处理时使用；先列清单并确认 |
+| 查询知识库 | `/query 什么是 RAII？` | 只读检索并综合回答，不自动保存 |
+| 健康检查 | `/lint` | 只读检测死链、孤儿页、知识冲突等，不自动修复 |
 
 **工作流**：
 1. 用 [Obsidian Web Clipper](https://obsidian.md/clipper) 将网页保存到 `raw/01-articles/`
-2. 在 Claude Code 中运行 `/ingest`
+2. 在 Claude Code 中运行 `/ingest raw/01-articles/filename.md` 摄入单份资料
 3. 用 Obsidian 的 Graph View 浏览知识图谱
-4. 用 `/query` 提问，好的回答自动沉淀为 `wiki/syntheses/` 页面
+4. 用 `/query` 提问；结果默认只读，不自动沉淀为页面。明确要求保存时，再转交摄入流程并确认写入范围
 5. 每隔几次摄入运行 `/lint` 保持知识库健康
 
-> **首次启动**：运行 `/ingest raw/05-wiki-export/` 重新摄入历史 wiki 内容。
+> **首次启动**：如需重新摄入 `raw/05-wiki-export/` 中的历史内容，请明确要求批量处理；由 `/ingest` 先列出清单并获得确认，不要将目录当作默认单份输入。
+
+### 知识库 Skills
+
+| Skill | 默认语义 |
+|:------|:---------|
+| `ingest` | 默认摄入一份资料；批量处理必须先列出清单并获得确认，可写入 `wiki/`。|
+| `query` | 只读检索 `wiki/`；除非明确要求保存，否则不创建或修改页面。|
+| `lint` | 只读检查 `wiki/` 结构与健康度，不自动修复。|
 
 ---
 
@@ -86,7 +104,7 @@ CLAUDE.md       ← Schema 层（你和 LLM 共同演化）
 | 工具 | 用途 |
 |:-----|:-----|
 | [Obsidian](https://obsidian.md) | Wiki 浏览器，Graph View 可视化知识图谱 |
-| [Claude Code](https://claude.ai/code) | Wiki 维护者（运行 `/ingest`、`/query`、`/lint`）|
+| [Claude Code](https://claude.ai/code) | Wiki 工作流入口（运行 `/ingest`、`/query`、`/lint`）|
 | [Obsidian CLI](https://github.com/mscharley/obsidian-cli) | Claude Code 与 Vault 的交互桥梁 |
 | [Obsidian Web Clipper](https://obsidian.md/clipper) | 浏览器扩展，网页转 Markdown 存入 raw/ |
 | [Dataview](https://github.com/blacksmithgu/obsidian-dataview)（可选）| 用 frontmatter tags 生成动态表格和视图 |

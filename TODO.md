@@ -12,7 +12,7 @@ tags:
 aliases:
   - TODO
   - 学习计划
-last_updated: 2026-06-16
+last_updated: 2026-09-06
 ---
 
 # 学习路线 & 待办
@@ -238,6 +238,6 @@ last_updated: 2026-06-16
 
 ## 关联连接
 
-- [[wiki/concepts]] — 相关概念页
-- [[wiki/index.md]] — 知识库索引
-- [[wiki/synthesis.md]] — 综合演化论述
+- [[wiki/index#概念|相关概念页]] — 按学科浏览概念页面
+- [[wiki/index|知识库索引]] — 知识库导航中枢
+- [[wiki/synthesis|综合演化论述]] — 跨领域知识的持续总结

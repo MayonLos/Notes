@@ -4,7 +4,7 @@ type: synthesis
 tags:
   - synthesis
   - meta
-last_updated: 2026-06-26
+last_updated: 2026-09-06
 ---
 
 > 本页是对整个知识领域持续演化的综合理解。每次摄入对整体认知框架有影响的资料时追加更新。
@@ -13,4 +13,6 @@ last_updated: 2026-06-26
 
 ## 关联连接
 
-- [[index]] — 全局索引
+- [[index|全局索引]] — 知识库导航中枢
+- [[log|操作日志]] — Wiki 维护操作记录
+- [[TODO|学习路线 & 待办]] — 学习方向与待办事项
