@@ -1,9 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Edit(/.claude/skills/wiki-ingest/**)",
-      "Edit(/.claude/skills/wiki-query/**)",
-      "Edit(/.claude/skills/wiki-lint/**)"
+      "Edit(/.claude/skills/**)",
+      "Bash(python3 /home/mayon/Vaults/.claude/skills/**)"
     ]
   }
 }

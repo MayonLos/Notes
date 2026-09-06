@@ -20,6 +20,7 @@ desktop.ini
 *.log
 
 # CLI runtime data
+.claude/cache/
 gemini-scribe/
 .claudian/
 .team/
@@ -36,3 +37,7 @@ gemini-scribe/
 
 # Ignore Smart Environment folder
 .smart-env
+
+# Python
+__pycache__/
+*.pyc

@@ -59,27 +59,38 @@ CLAUDE.md       ← Schema 层（你和 LLM 共同演化）
 
 | 操作 | 指令 | 说明 |
 |:-----|:-----|:-----|
-| 摄入单份资料 | `/ingest raw/01-articles/filename.md` | 默认一次处理一份资料 |
-| 批量摄入资料 | `/ingest` | 仅在明确要求批量处理时使用；先列清单并确认 |
-| 查询知识库 | `/query 什么是 RAII？` | 只读检索并综合回答，不自动保存 |
-| 健康检查 | `/lint` | 只读检测死链、孤儿页、知识冲突等，不自动修复 |
+| 记笔记 | `/note 二阶系统的超调量怎么来的` | 把刚学会的内容写成/补进笔记页 |
+| 摄入资料 | `/note raw/01-articles/filename.md` | 把一份 raw 资料编译进 wiki |
+| 查笔记 | `/query 什么是 RAII？` | 只读检索并给出带出处的回答 |
+| 复习 | `/review` | 看板：该复习什么、缺什么、TODO 到哪了 |
+| 自测 | `/review 锁存器和触发器` | 基于该页出题并批改 |
+| 默写提纲 | `/review 锁存器和触发器 --提纲` | 把该章压成填空式背诵材料 |
+| 体检 | `/lint` | 只读检测死链、孤儿页、结构问题，不自动修复 |
 
-**工作流**：
-1. 用 [Obsidian Web Clipper](https://obsidian.md/clipper) 将网页保存到 `raw/01-articles/`
-2. 在 Claude Code 中运行 `/ingest raw/01-articles/filename.md` 摄入单份资料
-3. 用 Obsidian 的 Graph View 浏览知识图谱
-4. 用 `/query` 提问；结果默认只读，不自动沉淀为页面。明确要求保存时，再转交摄入流程并确认写入范围
-5. 每隔几次摄入运行 `/lint` 保持知识库健康
+**学习闭环**：
 
-> **首次启动**：如需重新摄入 `raw/05-wiki-export/` 中的历史内容，请明确要求批量处理；由 `/ingest` 先列出清单并获得确认，不要将目录当作默认单份输入。
+1. **学** — 上课、看书、看视频，或直接在 Claude Code 里把某个知识点问明白
+2. **记** — `/note <主题>` 落盘：查重 → 建页 → 双向连线 → 登记 `index.md` 与 `log.md` → 自动校验
+3. **查** — 复习或做题时 `/query`，回答只来自笔记且给出页面锚点
+4. **复习** — 每周 `/review` 看该复习哪几页、哪些前置概念还空着；`/review <页面>` 做自测
+5. **体检** — 每隔几次记录跑 `/lint`，保持链接与索引干净
+
+资料也可以走 [Obsidian Web Clipper](https://obsidian.md/clipper) 存进 `raw/01-articles/`，再用 `/note <路径>` 摄入；`raw/` 始终只读，不会被移动或删除。
+
+> **不需要用 skill 的场景**：做题（「帮我画 Bode 图估相角裕度」）、纯答疑（「别翻笔记，用弹簧直觉讲讲欠阻尼」）——直接问就行。讲完觉得值得留下来，再说一句「记进笔记」走 `/note`。
 
 ### 知识库 Skills
 
-| Skill | 默认语义 |
-|:------|:---------|
-| `ingest` | 默认摄入一份资料；批量处理必须先列出清单并获得确认，可写入 `wiki/`。|
-| `query` | 只读检索 `wiki/`；除非明确要求保存，否则不创建或修改页面。|
-| `lint` | 只读检查 `wiki/` 结构与健康度，不自动修复。|
+职责互斥，**只有 `note` 会写文件**：
+
+| Skill | 语义 |
+|:------|:-----|
+| `note` | 唯一写入口：写/更新 `wiki/` 页面，含 raw 资料摄入。冲突先问，绝不静默覆盖。|
+| `query` | 只读检索 `wiki/`；索引优先、按需读片段；要落盘转交 `note`。|
+| `review` | 只读复习：自测题、复习队列、知识缺口、TODO 进度；不写 Vault。|
+| `lint` | 只读结构体检；只报告不修复。指向未建页面的链接算「待写」，不算错误。|
+
+> **省 token 的做法**：`.claude/cache/vault-index/` 里有一份自动刷新的索引（页面摘要 + 小标题 + 链接图）。skill 先在索引里定位，再只读需要的几十行，而不是把整个 `wiki/` 读进上下文。删掉也没关系，下次运行会自动重建。
 
 ---
 
@@ -104,7 +115,7 @@ CLAUDE.md       ← Schema 层（你和 LLM 共同演化）
 | 工具 | 用途 |
 |:-----|:-----|
 | [Obsidian](https://obsidian.md) | Wiki 浏览器，Graph View 可视化知识图谱 |
-| [Claude Code](https://claude.ai/code) | Wiki 工作流入口（运行 `/ingest`、`/query`、`/lint`）|
+| [Claude Code](https://claude.ai/code) | Wiki 工作流入口（运行 `/note`、`/query`、`/review`、`/lint`）|
 | [Obsidian CLI](https://github.com/mscharley/obsidian-cli) | Claude Code 与 Vault 的交互桥梁 |
 | [Obsidian Web Clipper](https://obsidian.md/clipper) | 浏览器扩展，网页转 Markdown 存入 raw/ |
 | [Dataview](https://github.com/blacksmithgu/obsidian-dataview)（可选）| 用 frontmatter tags 生成动态表格和视图 |

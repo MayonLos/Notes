@@ -41,9 +41,12 @@ CLAUDE.md               # 本文件：schema 与约定
 README.md               # 知识库说明与导航入口
 TODO.md                 # 学习路线与待办事项
 .claude/skills/         # 技能定义
-  ingest/               # 资料摄入
-  query/                # 知识查询
-  lint/                 # 健康检查
+  _lib/                 # 四个 skill 的共享库 + 索引构建
+  note/                 # 记笔记（唯一写入口）
+  query/                # 查笔记（只读）
+  review/               # 复习自测（只读）
+  lint/                 # 结构体检（只读）
+.claude/cache/          # 索引缓存（自动生成，已 gitignore，非笔记）
 ```
 
 ---
@@ -98,6 +101,8 @@ last_updated: YYYY-MM-DD
 | `#cpp` | C++ 编程语言 | `concepts/cpp/` |
 | `#embedded` | 嵌入式开发（STM32、ROS）| `concepts/cpp/`（待定）|
 | `#meta` | 方法论、工具、编程范式 | 视情况 |
+| `#source` | 资料摘要页的类型标签 | `sources/` |
+| `#comparison` | 对比分析页的类型标签 | `comparisons/` |
 
 ### Wikilinks 与交叉引用
 
@@ -142,11 +147,18 @@ last_updated: YYYY-MM-DD
 
 ### 知识库 Skills
 
-| Skill | 默认行为 | 写入/检查边界 |
-|:------|:---------|:--------------|
-| `ingest` | 默认一次处理一份资料；`/ingest` 仅在明确要求批量时使用 | 可写入 `wiki/`；批处理必须先列出清单并获得确认；不修改 `raw/` |
-| `query` | 只读检索并基于 Wiki 证据回答 | 不修改 Wiki；只有用户明确要求保存/沉淀时才转交摄入流程或另行确认 |
-| `lint` | 只读检查 Wiki 健康度 | 不自动修复、移动、删除或改写任何文件 |
+四个 skill 职责互斥，只有 `note` 能写：
+
+| Skill | 用途 | 边界 |
+|:------|:-----|:-----|
+| `note` | 把学到的内容写成/更新笔记页，含 raw 资料摄入 | **唯一写入口**：可写 `wiki/`（含 `index.md`、`log.md`）；`raw/` 只读；冲突必须先问，绝不静默覆盖；默认一次一个主题 |
+| `query` | 基于笔记证据回答问题 | 只读；索引优先、按需读片段；要落盘转交 `note` |
+| `review` | 出自测题、排复习队列、找知识缺口、核对 TODO | 只读；看板与题目不写进 Vault |
+| `lint` | 结构体检：frontmatter、链接、索引、孤儿页 | 只读；只报告不修复；待写页面按待办计，不算错误 |
+
+分界线：**`note` 问「要不要落盘」，`query` 问「笔记里记了什么」，`review` 问「学得怎么样」，`lint` 问「文件写得合不合规」。** 做题与纯答疑不走 skill，直接回答即可。
+
+**索引缓存**：`.claude/cache/vault-index/`（`pages.tsv` / `links.tsv` / `stats.json`）由 `.claude/skills/_lib/build_index.py` 生成，供 skill 先定位后精读，减少 token 消耗。它是派生数据，可随时删除重建；**新增标签、页面类型或学科目录时，同步更新 `.claude/skills/_lib/vault.py` 顶部常量**，否则 `lint` 会误报。
 
 ---
 
@@ -154,7 +166,10 @@ last_updated: YYYY-MM-DD
 
 | 指令 | 技能 | 说明 |
 |:-----|:-----|:-----|
-| `/ingest <路径>` | `ingest` | 默认将一份 raw/ 资料编译进 wiki |
-| `/ingest` | `ingest` | 仅在明确要求批量时使用，先列清单并获得确认 |
-| `/query <问题>` | `query` | 只读检索 wiki 并综合回答，不自动保存 |
-| `/lint` | `lint` | 只读执行知识库健康检查，不自动修复 |
+| `/note <主题或内容>` | `note` | 把这次学的内容写成/补进笔记页 |
+| `/note raw/01-articles/x.md` | `note` | 把一份 raw 资料编译进 wiki（原 `/ingest`） |
+| `/query <问题>` | `query` | 只读检索笔记并给出带出处的回答 |
+| `/review` | `review` | 学习状态看板：该复习什么、缺什么 |
+| `/review <页面>` | `review` | 基于该页出自测题并批改 |
+| `/review <页面> --提纲` | `review` | 把该页压成默写/背诵提纲 |
+| `/lint` | `lint` | 只读结构体检，不自动修复 |
