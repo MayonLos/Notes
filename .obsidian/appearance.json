@@ -1,4 +1,7 @@
 {
   "cssTheme": "Atom",
-  "showRibbon": false
+  "showRibbon": false,
+  "enabledCssSnippets": [
+    "noctalia"
+  ]
 }
