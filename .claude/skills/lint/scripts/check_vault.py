@@ -16,6 +16,56 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "_lib"))
 import vault  # noqa: E402
 
 
+import re  # noqa: E402
+
+# `\right` 经一次字符串转义会变成回车 + "ight"，`\frac` 变成换行 + "rac"，以此类推。
+# 这类残骸在 Obsidian 里渲染成乱码，肉眼扫过去很容易放过，所以交给机器盯。
+ESCAPE_DEBRIS = re.compile(
+    r"(?<![\\A-Za-z])(ight|imes|rac|abla|lpha|heta|arphi|silon|ambda)(?![A-Za-z])")
+# 命令名前的反斜杠整个丢掉的情况
+BARE_COMMAND = re.compile(
+    r"(?<![\\A-Za-z])(cdots|ldots|dfrac|frac|sqrt|left|right|omega|zeta|alpha|beta|gamma|"
+    r"lambda|infty|approx|times|cdot|boxed|sum|prod|partial|sigma|theta|varphi|"
+    r"overline|mathcal|mathbb|operatorname|qquad)(?![A-Za-z])")
+MATH_BLOCK = re.compile(r"\$\$(.+?)\$\$", re.S)
+MATH_INLINE = re.compile(r"(?<!\$)\$([^$\n]+?)\$(?!\$)")
+# \text{...} 与 \operatorname{...} 里是自然语言，不按 LaTeX 命令查
+TEXT_ARG = re.compile(r"\\(?:text|operatorname|mathrm|textbf|mbox)\s*\{[^{}]*\}")
+
+
+def _is_compound(target: str, candidate: str) -> bool:
+    """候选页名整个包含在待写页名里 → 是「限定词 + 基词」的新概念，不是打错字。
+
+    中文技术术语大量这样构词：状态空间 → 离散状态空间，整流电路 → 可控整流电路。
+    这类链接是正常的待写页面，不该每次体检都被当成疑似拼写错误报一遍。
+    """
+    base = candidate.split(" (")[0].strip()
+    return bool(base) and base != target and base in target
+
+
+def _check_latex(page, warnings) -> int:
+    """扫数学环境里的反斜杠丢失。这类错误 Obsidian 只会静默渲染成乱码。"""
+    body = vault.strip_code(page.body)
+    bad = 0
+    for pattern in (MATH_BLOCK, MATH_INLINE):
+        for match in pattern.finditer(body):
+            frag = TEXT_ARG.sub("", match.group(1))
+            hits = {m.group(1) for m in ESCAPE_DEBRIS.finditer(frag)}
+            hits |= {m.group(1) for m in BARE_COMMAND.finditer(frag)}
+            if hits:
+                bad += 1
+                line = body[: match.start()].count("\n") + 1
+                snippet = " ".join(match.group(1).split())[:60]
+                warnings.append(
+                    f"{page.rel}:{line}: 公式里疑似丢了反斜杠 {sorted(hits)} — `{snippet}`")
+    # 单个 $ 落单会让整段正文被当成公式渲染
+    stripped = MATH_BLOCK.sub("", body)
+    if stripped.count("$") % 2:
+        bad += 1
+        warnings.append(f"{page.rel}: 行内 `$` 数量为奇数，可能有未闭合的公式")
+    return bad
+
+
 def _check_links(page, pages, lookup, root, inbound, result, errors, warnings, planned):
     """返回 (死链, 歧义, 缺标题) 计数；特殊页与内容页共用。"""
     dead = amb = frag = 0
@@ -40,7 +90,9 @@ def _check_links(page, pages, lookup, root, inbound, result, errors, warnings, p
                 dead += 1
             else:
                 planned.append(f"{target} ← {page.rel}")
-                close = vault.nearest(target, pages, root)
+                name = vault.split_link(target)[0]
+                close = [c for c in vault.nearest(target, pages, root)
+                         if not _is_compound(name, c)]
                 if close:
                     # 中文短名一字之差常常是另一个概念（一阶/二阶），只提示不判错
                     warnings.append(
@@ -83,7 +135,7 @@ def main() -> int:
     today = dt.date.today()
 
     inbound = {p.rel: 0 for p in content}
-    dead = amb = frag = 0
+    dead = amb = frag = latex_bad = 0
     markers = {"conflict": 0, "unverified": 0, "todo": 0}
     seen_titles: dict[str, str] = {}
 
@@ -106,9 +158,9 @@ def main() -> int:
                 warnings.append(f"{rel}: 未登记标签 {unknown}；确认后请补进 CLAUDE.md 标签表")
 
         # 学科目录与标签是否一致
-        if page.subject and page.subject in vault.SUBJECT_DIRS:
-            expect = {"control": {"control", "math"}, "digital": {"digital"}, "cpp": {"cpp", "embedded"}}
-            if page.tags and not (set(page.tags) & expect[page.subject]):
+        if page.subject in vault.SUBJECT_TAGS:
+            expect = vault.SUBJECT_TAGS[page.subject]
+            if page.tags and not (set(page.tags) & expect):
                 warnings.append(f"{rel}: 位于 {page.subject}/ 但标签为 {page.tags}，目录与标签不一致")
 
         if "## 关联连接" not in page.body:
@@ -130,6 +182,8 @@ def main() -> int:
         for key in markers:
             markers[key] += counts[key]
 
+        latex_bad += _check_latex(page, warnings)
+
         counters = _check_links(page, pages, lookup, root, inbound, result,
                                 errors, warnings, planned)
         dead += counters[0]
@@ -150,7 +204,8 @@ def main() -> int:
 
     result["checks"] = {
         "pages": len(content), "dead_links": dead, "ambiguous_links": amb,
-        "missing_fragments": frag, "planned_pages": len(set(planned)),
+        "missing_fragments": frag, "latex_issues": latex_bad,
+        "planned_pages": len(set(planned)),
         "orphans": len(orphans), "raw_pending": raw_pending, "markers": markers,
     }
     result["notes"] = [

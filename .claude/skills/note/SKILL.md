@@ -44,13 +44,16 @@ user-invocable: true
    - `awaited_by` 非空 → 这页已被别处 `[[链接]]` 等着，建完自动补上入链。
    - 资料摄入先跑 `--source raw/01-articles/xxx.md`；`invalid` 停止，`duplicate` 先问。
 
-2. **确定落盘位置**（按主标签，见 `CLAUDE.md`）
+2. **确定落盘位置**（按主标签，见 `CLAUDE.md`；权威表是 `_lib/vault.py` 的 `SUBJECTS`）
 
    | 主标签 | 目录 |
    |:---|:---|
-   | `control` / `math` | `wiki/concepts/control/` |
+   | `control` / `math` | `wiki/concepts/control/`（含现代控制理论）|
    | `digital` | `wiki/concepts/digital/` |
-   | `cpp` / `embedded` | `wiki/concepts/cpp/` |
+   | `cpp` | `wiki/concepts/cpp/` |
+   | `micro` | `wiki/concepts/micro/` |
+   | `power` | `wiki/concepts/power/` |
+   | `embedded` | 跟随主标签落到 `cpp/` 或 `micro/` |
    | 资料摘要 | `wiki/sources/摘要-{slug}.md` |
    | 对比 | `wiki/comparisons/{A}-vs-{B}.md` |
    | 综合 | `wiki/syntheses/{主题}.md` |

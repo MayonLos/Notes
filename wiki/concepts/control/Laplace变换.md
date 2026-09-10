@@ -9,7 +9,7 @@ aliases:
   - Laplace Transform
   - 复频域分析
 sources: []
-last_updated: 2026-09-06
+last_updated: 2026-09-10
 ---
 
 > **一句话定义**：把时域函数搬到复频域的积分变换，让微分方程变成代数方程，是整门控制理论的数学地基。
@@ -69,6 +69,9 @@ $$\mathcal{L}\left\{\int_0^t f(\tau)\,d\tau\right\} = \frac{F(s)}{s}$$
 ### 初值 / 终值定理
 
 $$f(0^+) = \lim_{s \to \infty} sF(s) \qquad f(\infty) = \lim_{s \to 0} sF(s)$$
+
+> [!warning] 两个定理都有前提，不能拿来就用
+> **终值定理**要求 $sF(s)$ 的极点**全部位于开左半平面**（虚轴上、右半平面都不行）；**初值定理**要求 $F(s)$ 严格真、原点处不含冲激项。详见下方「易错点」一节。
 
 ### 卷积定理
 

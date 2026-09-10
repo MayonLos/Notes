@@ -27,9 +27,11 @@ raw/                    # 不可变资料层（只读）
 
 wiki/                   # 编译知识层（LLM 完全拥有）
   concepts/             # 概念页（按学科分子文件夹）
-    control/            # 自动控制原理
+    control/            # 自动控制原理 + 现代控制理论
     digital/            # 数字电路
     cpp/                # C++
+    micro/              # 微机原理
+    power/              # 电力电子
   sources/              # 资料摘要页（从 raw/ 提炼）
   comparisons/          # 对比分析页
   syntheses/            # 综合论述页（经明确要求保存的高价值查询沉淀）
@@ -99,7 +101,9 @@ last_updated: YYYY-MM-DD
 | `#math` | 数学工具（Laplace、算子等）| `concepts/control/` |
 | `#digital` | 数字电路与逻辑 | `concepts/digital/` |
 | `#cpp` | C++ 编程语言 | `concepts/cpp/` |
-| `#embedded` | 嵌入式开发（STM32、ROS）| `concepts/cpp/`（待定）|
+| `#micro` | 微机原理（8086、汇编、接口）| `concepts/micro/` |
+| `#power` | 电力电子（器件、变流电路）| `concepts/power/` |
+| `#embedded` | 嵌入式开发（STM32、ROS）| `concepts/cpp/`、`concepts/micro/` |
 | `#meta` | 方法论、工具、编程范式 | 视情况 |
 | `#source` | 资料摘要页的类型标签 | `sources/` |
 | `#comparison` | 对比分析页的类型标签 | `comparisons/` |
@@ -128,13 +132,17 @@ last_updated: YYYY-MM-DD
 | 概念（自控）| `wiki/concepts/control/` | 中文或 TitleCase | `二阶系统.md` |
 | 概念（数电）| `wiki/concepts/digital/` | 中文或 TitleCase | `组合逻辑电路.md` |
 | 概念（C++）| `wiki/concepts/cpp/` | 中文或 TitleCase | `内存管理.md` |
+| 概念（微机）| `wiki/concepts/micro/` | 中文或 TitleCase | `8086微处理器.md` |
+| 概念（电力电子）| `wiki/concepts/power/` | 中文或 TitleCase | `整流电路.md` |
 | 资料摘要 | `wiki/sources/` | `摘要-{slug}.md` | `摘要-ogata-modern-control.md` |
 | 对比 | `wiki/comparisons/` | `{A}-vs-{B}.md` | `PID-vs-超前校正.md` |
 | 综合 | `wiki/syntheses/` | 主题描述 slug | `频域分析综合.md` |
 
 优先中文命名；英文名/缩写作为 `aliases` 写入 frontmatter。
 
-**概念子文件夹选择规则**：根据页面的主 tag 确定放置位置——`#control`/`#math` → `control/`，`#digital` → `digital/`，`#cpp` → `cpp/`。
+**概念子文件夹选择规则**：根据页面的主 tag 确定放置位置——`#control`/`#math` → `control/`（含现代控制理论），`#digital` → `digital/`，`#cpp` → `cpp/`，`#micro` → `micro/`，`#power` → `power/`。
+
+> 学科目录与其合法标签的对应关系由 `.claude/skills/_lib/vault.py` 的 `SUBJECTS` 常量单一定义，`lint` 与 `review` 均从它派生。**新增学科时改那一处即可**，本表同步更新供人阅读。
 
 ### 矛盾处理原则
 

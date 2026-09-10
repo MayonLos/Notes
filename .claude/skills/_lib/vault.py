@@ -15,10 +15,20 @@ from pathlib import Path
 # ---------------------------------------------------------------- 约定常量
 
 PAGE_TYPES = {"entity", "concept", "source", "synthesis", "comparison", "index", "meta"}
-SUBJECT_DIRS = {"control": "自动控制原理", "digital": "数字电路", "cpp": "C++"}
+# 学科目录 → (中文显示名, 该目录下页面可接受的标签集合)
+# 新增学科时只改这一处：目录名、显示名、合法标签一次给全，lint 与 review 自动跟上
+SUBJECTS = {
+    "control": ("自动控制原理", {"control", "math"}),
+    "digital": ("数字电路", {"digital"}),
+    "cpp": ("C++", {"cpp", "embedded"}),
+    "micro": ("微机原理", {"micro", "embedded"}),
+    "power": ("电力电子", {"power"}),
+}
+SUBJECT_DIRS = {key: name for key, (name, _) in SUBJECTS.items()}
+SUBJECT_TAGS = {key: tags for key, (_, tags) in SUBJECTS.items()}
 # CLAUDE.md 标签表；新增标签时同步这里，lint 才不会误报
-KNOWN_TAGS = {"control", "math", "digital", "cpp", "embedded", "ai", "cs", "meta",
-              "todo", "synthesis", "source", "comparison"}
+KNOWN_TAGS = {"control", "math", "digital", "cpp", "embedded", "micro", "power",
+              "ai", "cs", "meta", "todo", "synthesis", "source", "comparison"}
 SPECIAL_PAGES = {"wiki/index.md", "wiki/log.md", "wiki/synthesis.md"}
 MARKERS = {
     "conflict": re.compile(r"知识冲突|\[!warning\][^\n]*矛盾"),

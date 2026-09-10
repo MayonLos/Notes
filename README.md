@@ -29,7 +29,7 @@ raw/            ← 不可变资料层（只读）
   09-archive/      已处理文件（归档）
 
 wiki/           ← 编译知识层（LLM 完全拥有）
-  concepts/        概念页（按学科分子目录，#tags 区分领域）
+  concepts/        概念页（按学科分子目录：control/ digital/ cpp/ micro/ power/）
   entities/        实体页（人物、工具、公司）
   sources/         资料摘要页
   comparisons/     对比分析页
@@ -104,6 +104,8 @@ CLAUDE.md       ← Schema 层（你和 LLM 共同演化）
 | `#math` | 数学工具（Laplace 变换、算子等）|
 | `#control` | 控制理论 |
 | `#digital` | 数字电路与逻辑 |
+| `#micro` | 微机原理（8086、汇编、接口）|
+| `#power` | 电力电子（器件、变流电路）|
 | `#embedded` | 嵌入式开发（STM32、ROS）|
 | `#ai` | 人工智能、机器学习、深度学习 |
 | `#meta` | 方法论、工具、编程范式 |

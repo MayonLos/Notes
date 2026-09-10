@@ -4,6 +4,8 @@
   （无参数）        输出整体学习状态
   --subject cpp     只看一个学科
   --points PAGE     抽取该页考点骨架（小标题/公式/加粗术语/表头），供出自测题
+
+看板还会报 TODO 脱节：条目已链到建好的页面却仍未勾选。
 """
 from __future__ import annotations
 
@@ -23,12 +25,19 @@ FORMULA = re.compile(r"\$\$(.+?)\$\$", re.S)
 CHECK = re.compile(r"^\s*-\s\[( |x|/)\]\s+(.*)$", re.M)
 
 
-def todo_progress(root: Path) -> dict[str, dict[str, int]]:
+def todo_progress(root: Path, lookup: dict[str, list] | None = None
+                  ) -> tuple[dict[str, dict[str, int]], list[dict[str, str]]]:
+    """扫 TODO.md 的复选框统计各章进度。
+
+    给了 lookup 就顺带找出**脱节项**：条目里的 `[[链接]]` 已经指向一个建好的页面，
+    但复选框还没打勾——笔记写了、TODO 忘了更新，是这个库最常见的失真来源。
+    """
     path = root / "TODO.md"
     if not path.is_file():
-        return {}
+        return {}, []
     text = vault.read_text(path)
     sections: dict[str, dict[str, int]] = {}
+    stale: list[dict[str, str]] = []
     current = "未分节"
     for line in text.splitlines():
         head = re.match(r"^##\s+(.+?)\s*$", line)
@@ -36,11 +45,20 @@ def todo_progress(root: Path) -> dict[str, dict[str, int]]:
             current = head.group(1).strip()
             continue
         item = CHECK.match(line)
-        if item:
-            bucket = sections.setdefault(current, {"done": 0, "doing": 0, "todo": 0})
-            bucket["done" if item.group(1) == "x" else
-                   "doing" if item.group(1) == "/" else "todo"] += 1
-    return sections
+        if not item:
+            continue
+        state, body = item.group(1), item.group(2)
+        bucket = sections.setdefault(current, {"done": 0, "doing": 0, "todo": 0})
+        bucket["done" if state == "x" else "doing" if state == "/" else "todo"] += 1
+        if lookup is None or state == "x":
+            continue
+        for _, target in vault.WIKILINK_RE.findall(body):
+            hit = lookup.get(vault.link_key(vault.split_link(target)[0]))
+            if hit:
+                stale.append({"section": current, "text": body.strip()[:70],
+                              "page": hit[0].rel, "state": state})
+                break
+    return sections, stale
 
 
 def points(root: Path, rel: str) -> dict[str, object]:
@@ -128,6 +146,7 @@ def main() -> int:
         planned = {k: v for k, v in planned.items()
                    if any(f"/concepts/{args.subject}/" in s for s in v)}
     planned_rank = sorted(planned.items(), key=lambda kv: -len(kv[1]))
+    todo_sections, todo_stale = todo_progress(root, vault.build_lookup(pages_all))
 
     payload = {
         "tool": "study_status", "root": str(root), "status": "ok", "mode": "dashboard",
@@ -138,9 +157,11 @@ def main() -> int:
         "review_queue": queue[: args.limit],
         "planned_pages": [{"name": k, "awaited_by": v} for k, v in planned_rank[: args.limit]],
         "gaps": gaps[: args.limit * 2],
-        "todo_progress": todo_progress(root),
+        "todo_progress": todo_sections,
+        "todo_stale": todo_stale,
         "totals": {"pages": len(pages), "stale": len(queue),
-                   "planned": len(planned), "gaps": len(gaps)},
+                   "planned": len(planned), "gaps": len(gaps),
+                   "todo_stale": len(todo_stale)},
     }
     if args.json:
         print(json.dumps(payload, ensure_ascii=False, indent=2))
@@ -165,6 +186,10 @@ def main() -> int:
     for section, counts in payload["todo_progress"].items():
         total = sum(counts.values())
         print(f"  {section}: {counts['done']}/{total} 完成，进行中 {counts['doing']}")
+    if payload["todo_stale"]:
+        print(f"\n[TODO 脱节 · 页面已建但没勾选 {t['todo_stale']} 项]")
+        for item in payload["todo_stale"]:
+            print(f"  [{item['state']}] {item['section']} — {item['text']}  → {item['page']}")
     return 0
 
 
