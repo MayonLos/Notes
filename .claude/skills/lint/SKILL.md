@@ -1,6 +1,6 @@
 ---
 name: lint
-description: 只读检查笔记的结构与格式是否合规：frontmatter 字段、type/标签合法性、目录与标签一致性、wikilink 能否解析、index.md 登记、孤儿页、重复标题、公式里丢反斜杠。只报告不修复。问「该复习什么、还缺什么知识」是学习视角，属于 review，不是这里。
+description: 只读检查笔记的结构与格式是否合规：frontmatter 字段、type/标签合法性、目录与标签一致性、wikilink 能否解析、index.md 登记、孤儿页与孤儿资源、重复标题、公式里丢反斜杠。只报告不修复。问「该复习什么、还缺什么知识」是学习视角，属于 review，不是这里。
 user-invocable: true
 ---
 
@@ -34,7 +34,7 @@ python3 "$ROOT/.claude/skills/lint/scripts/check_vault.py" --root "$ROOT" --json
 python3 "$ROOT/.claude/skills/lint/scripts/check_vault.py" --root "$ROOT" --stale-days 90
 ```
 
-检查项：入口三件套（`index/log/synthesis`）存在性 · frontmatter 必填与 `type` 合法性 · 标签是否已在 `CLAUDE.md` 登记 · 目录与主标签是否一致（口径来自 `_lib/vault.py` 的 `SUBJECTS`） · `## 关联连接` 是否存在 · 链接解析（resolved / 待写 / 歧义 / 缺标题 / 疑似打错） · **公式里丢反斜杠与 `$` 未闭合** · `index.md` 登记 · 入链为 0 的孤儿页 · `last_updated` 格式与过期 · 重复标题 · 内容标记计数 · `raw/` 待处理数。
+检查项：入口三件套（`index/log/synthesis`）存在性 · frontmatter 必填与 `type` 合法性 · 标签是否已在 `CLAUDE.md` 登记 · 目录与主标签是否一致（口径来自 `_lib/vault.py` 的 `SUBJECTS`） · `## 关联连接` 是否存在 · 链接解析（resolved / 待写 / 歧义 / 缺标题 / 疑似打错） · **公式里丢反斜杠与 `$` 未闭合** · `index.md` 登记 · 入链为 0 的孤儿页 · **`assets/` 里无人引用的孤儿资源** · `last_updated` 格式与过期 · 重复标题 · 内容标记计数 · `raw/` 待处理数。
 
 不要把 `rg` 的退出码或高亮当结论；脚本没覆盖到的判断，写清楚是人工核对还是「未验证」。
 
@@ -50,6 +50,7 @@ python3 "$ROOT/.claude/skills/lint/scripts/check_vault.py" --root "$ROOT" --stal
 - `wiki/xxx.md`：`[[稳定裕度]]` 尚未建页且与 `稳定裕量` 相近——确认是打错字还是另一页
 - `wiki/concepts/cpp/基础语法.md`：标签 `['concept','编程','C++']` 与目录 `cpp/` 不一致，建议改为 `cpp`
 - `wiki/concepts/micro/汇编语言.md:91`：公式里疑似丢了反斜杠 `['sum']` — `sum_{i=0}^{4}BUF[i]`
+- `wiki/assets/old-diagram.svg`：没有任何页面引用它（孤儿资源）
 
 ## 📝 待写页面（正常待办，不是错误）
 - `稳态误差` ← 2 处引用在等
@@ -65,4 +66,4 @@ python3 "$ROOT/.claude/skills/lint/scripts/check_vault.py" --root "$ROOT" --stal
 
 ## 输出契约
 
-`check_vault.py`：默认打印 `check_vault: PASS|WARN|FAIL` + `pages/errors/warnings/planned` + 逐条 `ERROR:`/`WARN:`/`NOTE:`；`--json` 输出 `{tool, root, status, checks, errors, warnings, planned, notes}`，`checks` 含 `pages, dead_links, ambiguous_links, missing_fragments, latex_issues, planned_pages, orphans, raw_pending, markers`。退出码 `0` 无 ERROR（含 WARN），`1` 有 ERROR。
+`check_vault.py`：默认打印 `check_vault: PASS|WARN|FAIL` + `pages/errors/warnings/planned` + 逐条 `ERROR:`/`WARN:`/`NOTE:`；`--json` 输出 `{tool, root, status, checks, errors, warnings, planned, notes}`，`checks` 含 `pages, dead_links, ambiguous_links, missing_fragments, latex_issues, planned_pages, orphans, orphan_assets, raw_pending, markers`。退出码 `0` 无 ERROR（含 WARN），`1` 有 ERROR。

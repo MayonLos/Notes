@@ -25,4 +25,4 @@
 python3 /home/mayon/Vaults/.claude/skills/_lib/build_index.py --root /home/mayon/Vaults [--force] [--json]
 ```
 
-新增标签、页面类型或学科目录时，同步改 `vault.py` 顶部的 `PAGE_TYPES` / `KNOWN_TAGS` / `SUBJECT_DIRS`，否则 `lint` 会误报。
+新增标签、页面类型或学科目录时，同步改 `vault.py` 顶部的 `PAGE_TYPES` / `KNOWN_TAGS` / `SUBJECTS`，否则 `lint` 会误报。

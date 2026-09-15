@@ -19,9 +19,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "_lib"))
 import vault  # noqa: E402
 
-TAG_DIR = {"control": "wiki/concepts/control", "math": "wiki/concepts/control",
-           "digital": "wiki/concepts/digital", "cpp": "wiki/concepts/cpp",
-           "embedded": "wiki/concepts/cpp"}
+# 从 vault.SUBJECTS 派生，别在这里另写一份——note 是唯一写入口，
+# 这张表一旦落后于 SUBJECTS，新页就会被放到 wiki/concepts/ 根下，
+# 而 lint 对那种路径的 subject 判定为空、恰好查不出来。
+TAG_DIR = {tag: f"wiki/concepts/{key}"
+           for key, tags in vault.SUBJECT_TAGS.items() for tag in tags}
 REQUIRED_FM = ("title", "type", "tags", "last_updated")
 
 

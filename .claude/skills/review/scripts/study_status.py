@@ -146,7 +146,9 @@ def main() -> int:
         planned = {k: v for k, v in planned.items()
                    if any(f"/concepts/{args.subject}/" in s for s in v)}
     planned_rank = sorted(planned.items(), key=lambda kv: -len(kv[1]))
-    todo_sections, todo_stale = todo_progress(root, vault.build_lookup(pages_all))
+    # 用过滤后的 pages 建 lookup，这样 --subject 也能收窄脱节项；
+    # 其它分区都跟随 --subject/--limit，这里不跟随会让看板自相矛盾
+    todo_sections, todo_stale = todo_progress(root, vault.build_lookup(pages))
 
     payload = {
         "tool": "study_status", "root": str(root), "status": "ok", "mode": "dashboard",
@@ -158,7 +160,7 @@ def main() -> int:
         "planned_pages": [{"name": k, "awaited_by": v} for k, v in planned_rank[: args.limit]],
         "gaps": gaps[: args.limit * 2],
         "todo_progress": todo_sections,
-        "todo_stale": todo_stale,
+        "todo_stale": todo_stale[: args.limit],
         "totals": {"pages": len(pages), "stale": len(queue),
                    "planned": len(planned), "gaps": len(gaps),
                    "todo_stale": len(todo_stale)},

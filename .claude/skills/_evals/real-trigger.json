@@ -1,0 +1,123 @@
+[
+ {
+  "q": "刚上完自控课，老师讲了根轨迹的八条绘制法则，我记在草稿纸上了，帮我整理成一页",
+  "owner": "note",
+  "picked": "note"
+ },
+ {
+  "q": "把你刚才讲的维持-阻塞那段原理补进锁存器和触发器那一页去",
+  "owner": "note",
+  "picked": "note",
+  "note": "批量并发时判定失真；单独复测 3/3 均正确选中 note，工具序列为 ['Skill']"
+ },
+ {
+  "q": "raw/01-articles/pid-tuning-guide.md 这篇文章收进知识库",
+  "owner": "note",
+  "picked": "note"
+ },
+ {
+  "q": "这个 IGBT 拖尾电流的解释挺好的，我以后肯定忘，存一下",
+  "owner": "note",
+  "picked": "note"
+ },
+ {
+  "q": "今天补了三相全控桥的换相重叠，写成笔记吧",
+  "owner": "note",
+  "picked": "note"
+ },
+ {
+  "q": "我笔记里关于二阶系统超调量那个公式是怎么推的来着",
+  "owner": "query",
+  "picked": "query"
+ },
+ {
+  "q": "之前有没有记过 CF 和 OF 的区别？在哪一页",
+  "owner": "query",
+  "picked": "query"
+ },
+ {
+  "q": "翻一下我的笔记，那道卡诺图例题最后答案是 B+AC 还是别的",
+  "owner": "query",
+  "picked": "query"
+ },
+ {
+  "q": "我到底记过整流电路的换相重叠没有",
+  "owner": "query",
+  "picked": "query"
+ },
+ {
+  "q": "wiki 里讲过对偶原理吗，怎么说的",
+  "owner": "query",
+  "picked": "query"
+ },
+ {
+  "q": "下周考自动控制原理，我现在哪几章最薄弱",
+  "owner": "review",
+  "picked": "review"
+ },
+ {
+  "q": "给我出五道二阶系统的自测题，做完帮我批",
+  "owner": "review",
+  "picked": "review"
+ },
+ {
+  "q": "把锁存器和触发器那一页压成默写提纲，我要背",
+  "owner": "review",
+  "picked": "review"
+ },
+ {
+  "q": "TODO 上数电标了 17 条完成，跟实际笔记对得上吗",
+  "owner": "review",
+  "picked": "review"
+ },
+ {
+  "q": "哪些笔记好久没动了，该拿出来复习一遍",
+  "owner": "review",
+  "picked": "review"
+ },
+ {
+  "q": "扫一遍知识库，看有没有死链和孤儿页",
+  "owner": "lint",
+  "picked": "lint"
+ },
+ {
+  "q": "我怀疑新建的几页 frontmatter 漏了字段，查一下",
+  "owner": "lint",
+  "picked": "lint"
+ },
+ {
+  "q": "跑个结构体检，看格式合不合规",
+  "owner": "lint",
+  "picked": "lint"
+ },
+ {
+  "q": "有没有哪页忘了登记到 index.md 里",
+  "owner": "lint",
+  "picked": "lint"
+ },
+ {
+  "q": "新写的那几页公式里有没有丢反斜杠的",
+  "owner": "lint",
+  "picked": "lint"
+ },
+ {
+  "q": "别翻笔记，直接用弹簧的例子给我讲讲阻尼比是什么",
+  "owner": "none",
+  "picked": "none"
+ },
+ {
+  "q": "帮我算一下三相全控桥 α=45°、线电压 380V 时的输出平均电压",
+  "owner": "none",
+  "picked": "none"
+ },
+ {
+  "q": "解释一下为什么补码能把减法当加法做",
+  "owner": "none",
+  "picked": "none"
+ },
+ {
+  "q": "这道劳斯表我算出首列有个负数，是不是说明系统不稳定",
+  "owner": "none",
+  "picked": "none"
+ }
+]

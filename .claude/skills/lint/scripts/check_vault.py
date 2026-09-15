@@ -23,10 +23,15 @@ import re  # noqa: E402
 ESCAPE_DEBRIS = re.compile(
     r"(?<![\\A-Za-z])(ight|imes|rac|abla|lpha|heta|arphi|silon|ambda)(?![A-Za-z])")
 # 命令名前的反斜杠整个丢掉的情况
+# 排除紧跟 { _ ^ 或数字之后的：`$P_{sum}$`、`$e_{prod}$` 里的 sum/prod 是正常下标，
+# 不是丢了反斜杠的命令。误报会把真警告挤出报告，比漏报更伤。
 BARE_COMMAND = re.compile(
-    r"(?<![\\A-Za-z])(cdots|ldots|dfrac|frac|sqrt|left|right|omega|zeta|alpha|beta|gamma|"
+    r"(?<![\\A-Za-z{_^0-9])(cdots|ldots|dfrac|frac|sqrt|left|right|omega|zeta|alpha|beta|gamma|"
     r"lambda|infty|approx|times|cdot|boxed|sum|prod|partial|sigma|theta|varphi|"
     r"overline|mathcal|mathbb|operatorname|qquad)(?![A-Za-z])")
+FENCE_BLOCK = vault.FENCE_RE
+INLINE_CODE = re.compile(r"`[^`\n]*`")
+ESCAPED_DOLLAR = re.compile(r"\\\$")
 MATH_BLOCK = re.compile(r"\$\$(.+?)\$\$", re.S)
 MATH_INLINE = re.compile(r"(?<!\$)\$([^$\n]+?)\$(?!\$)")
 # \text{...} 与 \operatorname{...} 里是自然语言，不按 LaTeX 命令查
@@ -43,9 +48,43 @@ def _is_compound(target: str, candidate: str) -> bool:
     return bool(base) and base != target and base in target
 
 
+def _check_orphan_assets(root, pages, warnings) -> int:
+    """assets/ 里没有任何页面引用的文件。
+
+    lint 原本只查一个方向——「引用了但文件不存在」（记为 ERROR）。
+    反向的孤儿资源不会报错，于是删掉某页配图后，文件会一直躺在 assets/ 里没人发现。
+    这里按文件名在全部页面正文里搜，`![[x.svg]]`、`[](assets/x.svg)` 两种写法都能覆盖。
+    """
+    assets = root / "wiki" / "assets"
+    if not assets.is_dir():
+        return 0
+    corpus = "\n".join(page.body for page in pages)
+    orphans = 0
+    for f in sorted(assets.rglob("*")):
+        if f.is_file() and f.name not in corpus:
+            orphans += 1
+            warnings.append(f"wiki/assets/{f.name}: 没有任何页面引用它（孤儿资源）")
+    return orphans
+
+
+def _blank_fences(text: str) -> str:
+    """把围栏代码块换成等行数的空行。
+
+    直接删掉会让后面所有内容的行号往前跳，报出来的位置就对不上文件了。
+    """
+    return FENCE_BLOCK.sub(lambda m: "\n" * m.group(0).count("\n"), text)
+
+
 def _check_latex(page, warnings) -> int:
     """扫数学环境里的反斜杠丢失。这类错误 Obsidian 只会静默渲染成乱码。"""
-    body = vault.strip_code(page.body)
+    # page.body 已经去掉 frontmatter，行号要加回它占的行数，否则指到的是别处
+    fm_lines = 0
+    try:
+        raw = vault.read_text(page.path)
+        fm_lines = raw.count("\n") - page.body.count("\n")
+    except OSError:
+        pass
+    body = _blank_fences(page.body)
     bad = 0
     for pattern in (MATH_BLOCK, MATH_INLINE):
         for match in pattern.finditer(body):
@@ -54,12 +93,15 @@ def _check_latex(page, warnings) -> int:
             hits |= {m.group(1) for m in BARE_COMMAND.finditer(frag)}
             if hits:
                 bad += 1
-                line = body[: match.start()].count("\n") + 1
+                line = fm_lines + body[: match.start()].count("\n") + 1
                 snippet = " ".join(match.group(1).split())[:60]
                 warnings.append(
                     f"{page.rel}:{line}: 公式里疑似丢了反斜杠 {sorted(hits)} — `{snippet}`")
-    # 单个 $ 落单会让整段正文被当成公式渲染
+    # 单个 $ 落单会让整段正文被当成公式渲染。
+    # 行内代码里的 $ 不算——`echo $PATH` 这种 shell/汇编片段本库里不少。
     stripped = MATH_BLOCK.sub("", body)
+    stripped = INLINE_CODE.sub("", stripped)
+    stripped = ESCAPED_DOLLAR.sub("", stripped)
     if stripped.count("$") % 2:
         bad += 1
         warnings.append(f"{page.rel}: 行内 `$` 数量为奇数，可能有未闭合的公式")
@@ -202,11 +244,13 @@ def main() -> int:
                       if (root / "raw" / d).is_dir()
                       for p in (root / "raw" / d).rglob("*") if p.is_file())
 
+    orphan_assets = _check_orphan_assets(root, pages, warnings)
+
     result["checks"] = {
         "pages": len(content), "dead_links": dead, "ambiguous_links": amb,
         "missing_fragments": frag, "latex_issues": latex_bad,
         "planned_pages": len(set(planned)),
-        "orphans": len(orphans), "raw_pending": raw_pending, "markers": markers,
+        "orphans": len(orphans), "orphan_assets": orphan_assets, "raw_pending": raw_pending, "markers": markers,
     }
     result["notes"] = [
         f"待写页面（wikilink 已指向、页面未建）{len(set(planned))} 个——学习路线的正常状态，用 /review 查看优先级",

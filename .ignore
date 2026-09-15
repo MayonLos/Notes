@@ -1,0 +1,15 @@
+# Marksman indexes every .md under the workspace root (~/Vaults, found via .git)
+# and reads .gitignore / .hgignore / .ignore for exclusions. .trash holds 63 of
+# the vault's 112 notes -- Obsidian's deleted copies plus a whole
+# review-20260906/wiki-before-rewrite/ snapshot -- so every [[wiki link]] with a
+# trashed namesake resolved to 2-3 candidates and came back as
+# "Ambiguous link to document". .trash is tracked in git on purpose, so the
+# exclusion goes here instead of .gitignore.
+#
+# ripgrep and fd honour this file too, which also keeps telescope out of .trash.
+.trash/
+
+# Agent scratch dirs: real notes never link into them, they only add noise to
+# completion and workspace symbols.
+.team/
+.claudian/
